@@ -4,7 +4,7 @@
  * portrait frame under 500 px tall, or one well under its tallest while a
  * field has focus (useKeyboardOpen), means it is open; the bar then steps
  * aside, so the field being typed in and the page's own action bar keep
- * the room (docs/DESIGN.md → Mobile → Keyboard).
+ * the room (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile → Keyboard).
  */
 import { usePhoneLayout } from '../../hooks/usePhoneLayout';
 import { useKeyboardOpen, useLandscapeFrame, useShortFrame } from '../../utils/hubFrame';

@@ -5,7 +5,7 @@ import { APP_NAME } from '../constants/plus';
  * that there is a reply to your comment"). Hub can only match a published
  * resource by its service, identifier and metadata, never its body, so a
  * reply says whose comment it answers where Hub and a QDN search can see it,
- * the way Quitter marks its replies (docs/apps/Q-Mintership+.md → Data
+ * the way Quitter marks its replies (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data
  * contract).
  *
  * Marker `~qmpre<16 hex>~`: the FNV-1a 64-bit hash of the replied-to name

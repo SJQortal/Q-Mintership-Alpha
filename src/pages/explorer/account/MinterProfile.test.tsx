@@ -256,7 +256,7 @@ describe('Minter Profile', () => {
     expect(within(nomination).getByRole('link', { name: 'Open the nomination' })).toBeVisible();
     const timeline = await section('MINTER timeline');
     expect(await within(timeline).findByText('Nominated for MINTER')).toBeInTheDocument();
-    const original = await section('From the original app');
+    const original = await section('From Q-Mintership 3');
     expect(
       await within(original).findByText(`${PEOPLE.nominatedSigning.name} for the MINTER group`)
     ).toBeInTheDocument();
@@ -307,7 +307,7 @@ describe('Minter Profile', () => {
         name: proposeNominationFor(PEOPLE.kicked.name as string),
       })
     ).toHaveAttribute('href', `/nominate?who=${ADDR.kicked}`);
-    const original = await section('From the original app');
+    const original = await section('From Q-Mintership 3');
     expect(await within(original).findByText('Please invite me to MINTER')).toBeInTheDocument();
     expect(within(original).getByText(/Posted by Kit Kicked for themselves/)).toBeInTheDocument();
   });
@@ -495,7 +495,7 @@ describe('Minter Profile', () => {
     ).toBeInTheDocument();
   });
 
-  it('looks further back through the original app’s cards on request', async () => {
+  it('looks further back through Q-Mintership 3’s cards on request', async () => {
     // Cards about Member 22 pushed past the first look, before the tab reads any.
     await visit(fakeAddress('member-21'), 'learner', (world) => {
       for (let i = 0; i < 45; i++) {
@@ -508,7 +508,7 @@ describe('Minter Profile', () => {
         });
       }
     });
-    const original = await section('From the original app');
+    const original = await section('From Q-Mintership 3');
     expect(
       await within(original).findByText(/Looked through the newest 40 of \d+ cards/, {}, T)
     ).toBeInTheDocument();
@@ -621,7 +621,7 @@ describe('Minter Profile: one’s own admin role', () => {
 });
 
 describe('Minter Profile: reads', () => {
-  it('reads the original app’s cards only once that section comes near the screen', async () => {
+  it('reads Q-Mintership 3’s cards only once that section comes near the screen', async () => {
     // Nothing is near the screen until the test scrolls everything into view.
     const triggers: Array<() => void> = [];
     class FarAway {
@@ -642,7 +642,7 @@ describe('Minter Profile: reads', () => {
     }
     vi.stubGlobal('IntersectionObserver', FarAway);
     await visit(ADDR.kicked, 'nominator');
-    await section('From the original app');
+    await section('From Q-Mintership 3');
     const cardReads = () =>
       fetchCallsFor(/\/arbitrary\/(BLOG_POST|resources\/search\w*\?[^ ]*Minter-board-card)/);
     expect(cardReads()).toEqual([]);

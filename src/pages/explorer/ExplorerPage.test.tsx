@@ -190,7 +190,7 @@ describe('the Explorer’s landing page', () => {
     expect(
       within(nominated).getByRole('link', { name: 'Wren Waiting: explore this account' })
     ).toBeInTheDocument();
-    // Proposed on chain, as the original app does, with no nomination record: by name too
+    // Proposed on chain, as Q-Mintership 3 does, with no nomination record: by name too
     // (Simon, 2026-10-20: "users adress instead of name shows in Explorer").
     expect(
       await within(nominated).findByRole('link', { name: 'Mia Met: explore this account' }, T)

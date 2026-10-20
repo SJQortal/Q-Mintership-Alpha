@@ -1,5 +1,5 @@
 /**
- * "In Q-Mintership+, under any of their names": the + app's records the
+ * "In Q-Mintership, under any of their names": this app's records the
  * account published under any name it owns (data/explorer/madeBy.ts):
  * nominations made, supports, community votes, comments and Considering
  * marks, each with the people or items concerned; the encrypted Minter Admin

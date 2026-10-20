@@ -118,7 +118,7 @@ describe('compare picks', () => {
 
 describe('recent explorations', () => {
   it('remembers addresses only, newest first, at most 8, under the app’s prefix', () => {
-    expect(RECENT_KEY).toBe('qmintershipplus-explorer-recent');
+    expect(RECENT_KEY).toBe('qmintership-explorer-recent');
     const many = 'abcdefghij'.split('').map(addr);
     for (const a of many) recordRecent(a);
     recordRecent(many[3]);

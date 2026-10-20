@@ -107,7 +107,7 @@ function cappedLinks(world: World, who: string) {
   });
 }
 
-const VIEW_KEY = 'qmintershipplus-connections-view';
+const VIEW_KEY = 'qmintership-connections-view';
 beforeEach(() => {
   resetExplorerState();
   // The circle is the default; most tests here read the list.
@@ -592,7 +592,7 @@ describe('Connections: nothing found, Copy findings, Core’s report', () => {
     expect(text).toContain('Reward shares, level moves and name sales: all ');
     expect(text).toContain('Also checked, nothing found:');
     expect(text).toContain(
-      `qortal://APP/Q-Mintership+/explorer/account/${ADDR.kickTarget}/connections`
+      `qortal://APP/Q-Mintership/explorer/account/${ADDR.kickTarget}/connections`
     );
     expect(text).not.toMatch(VERDICTS);
     expect(
@@ -860,7 +860,7 @@ describe('Connections: as a circle', () => {
     await region('Recorded between them');
     await user.click(screen.getByRole('button', { name: 'Circle' }));
     expect(screen.getByRole('button', { name: 'Circle' })).toHaveAttribute('aria-pressed', 'true');
-    expect(window.localStorage.getItem('qmintershipplus-connections-view')).toBe('circle');
+    expect(window.localStorage.getItem('qmintership-connections-view')).toBe('circle');
     const circle = await region('Connections circle');
     expect(screen.queryByRole('region', { name: 'Recorded between them' })).toBeNull();
     // Each side its own list and heading; Kit, paid each way, is one avatar at the bottom.
@@ -921,7 +921,7 @@ describe('Connections: as a circle', () => {
 
     await user.click(screen.getByRole('button', { name: 'List' }));
     expect(await region('Recorded between them')).toBeInTheDocument();
-    expect(window.localStorage.getItem('qmintershipplus-connections-view')).toBe('list');
+    expect(window.localStorage.getItem('qmintership-connections-view')).toBe('list');
   });
 
   it('lists the accounts under the circle on request: the circle’s, a line, then the rest (Simon, 2026-10-19)', async () => {
@@ -995,7 +995,7 @@ describe('Connections: as a circle', () => {
       'aria-pressed',
       'true'
     );
-    expect(window.localStorage.getItem('qmintershipplus-connections-circle-order')).toBe('qort');
+    expect(window.localStorage.getItem('qmintership-connections-circle-order')).toBe('qort');
     expect(
       within(circle).getByRole('list', { name: 'Received from, the most QORT first' })
     ).toBeInTheDocument();

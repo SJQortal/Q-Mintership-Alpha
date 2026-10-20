@@ -7,7 +7,7 @@
  *   MINTER's admins decide them.
  * - KICK/BAN/… take `qortalAddress` (an address, never a name).
  * - INVITE_TO_GROUP needs a non-zero `inviteTime` (Hub refuses 0); 864000 as
- *   the original app sends.
+ *   Q-Mintership 3 sends.
  * - JOIN_GROUP never needs approval (Hub sends txGroupId 0 itself).
  * - GROUP_APPROVAL has no Hub action: the app builds the bytes and sends
  *   SIGN_TRANSACTION with process: true.

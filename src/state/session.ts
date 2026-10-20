@@ -4,7 +4,7 @@
  *
  * - Outside Hub and GO there is no qortalRequest: status 'outside'.
  * - GET_USER_ACCOUNT can hang until Hub's 30 s timeout (Hub locked), so it is
- *   tried twice, then the app shows Sign in (docs/QORTAL.md pitfall 12).
+ *   tried twice, then the app shows Sign in (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md pitfall 12).
  * - A declined Authenticate dialog is 'signedOut', not an error.
  */
 import { useEffect } from 'react';

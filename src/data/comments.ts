@@ -1,5 +1,5 @@
 /**
- * Reading comments (docs/apps/Q-Mintership+.md → Data contract):
+ * Reading comments (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract):
  *
  * - **Counts:** one shared search lists every comment of the last 45 days
  *   (`identifier=qmp-comment-&prefix=true&after=…`, 100 a page, at most 3

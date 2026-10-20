@@ -43,7 +43,7 @@ export function railItems(): NavItem[] {
 }
 
 /**
- * The phone bar: five items at most (docs/DESIGN.md → Mobile): Home,
+ * The phone bar: five items at most (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile): Home,
  * Decisions, History and Explorer. Minter Admin activity lives in the
  * Explorer (its page, under Browse: Minter Admins). Settings is a gear in
  * Home's header (HomePage), and shows Back.

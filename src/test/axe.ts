@@ -1,6 +1,6 @@
 /**
  * axe-core in jsdom, for the accessibility tests: the same WCAG 2.1 A/AA and
- * best-practice rules as the screenshot check (scripts/screens.mjs), less
+ * best-practice rules as the screenshot check (e2e/screens.mjs), less
  * the ones jsdom can't judge without layout (contrast; the screenshot check
  * covers it in a real browser).
  *

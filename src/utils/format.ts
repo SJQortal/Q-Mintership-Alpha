@@ -1,6 +1,6 @@
 /**
  * Plain, short formatting for people: names before addresses, times in days
- * and hours, numbers with separators. English for now (the original app has
+ * and hours, numbers with separators. English for now (Q-Mintership 3 has
  * no translations).
  */
 
@@ -139,7 +139,7 @@ export function formatBlock(height: number): string {
 }
 
 /** "1 signature", "8 signatures". */
-/** `text` with its first letter capitalised, to start a sentence ("the original app" → "The original app"). */
+/** `text` with its first letter capitalised, to start a sentence ("Q-Mintership 3" → "Q-Mintership 3"). */
 export function sentenceStart(text: string): string {
   return text ? text[0].toUpperCase() + text.slice(1) : text;
 }

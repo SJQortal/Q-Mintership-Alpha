@@ -1,5 +1,5 @@
 /**
- * Minter Admin polls as one admin reads them (docs/apps/Q-Mintership+.md →
+ * Minter Admin polls as one admin reads them (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md →
  * Reads). Only for Minter Admins, only while Decisions or a poll's page is
  * open; Home reuses what those read and reads nothing itself.
  *

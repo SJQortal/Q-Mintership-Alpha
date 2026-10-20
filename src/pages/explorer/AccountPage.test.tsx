@@ -211,7 +211,7 @@ describe('an account in the Explorer', () => {
     await user.click(copy);
     await waitFor(
       () =>
-        expect(writeText).toHaveBeenLastCalledWith(`qortal://APP/Q-Mintership+${tx}?order=oldest`),
+        expect(writeText).toHaveBeenLastCalledWith(`qortal://APP/Q-Mintership${tx}?order=oldest`),
       T
     );
     const tabs = screen.getByRole('tablist', { name: 'Account sections' });
@@ -221,7 +221,7 @@ describe('an account in the Explorer', () => {
     await waitFor(
       () =>
         expect(writeText).toHaveBeenLastCalledWith(
-          `qortal://APP/Q-Mintership+${explorerAccountPath(ADDR.nominator, 'names')}`
+          `qortal://APP/Q-Mintership${explorerAccountPath(ADDR.nominator, 'names')}`
         ),
       T
     );

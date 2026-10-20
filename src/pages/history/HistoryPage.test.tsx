@@ -369,11 +369,11 @@ describe('History page: the target', () => {
   });
 });
 
-describe('History page: the original app', () => {
+describe('History page: Q-Mintership 3', () => {
   it('lists the old cards newest first, 20 at a time, without the copy under a card id', async () => {
     await renderPage(<HistoryPage />, { persona: 'learner', path: '/history' });
     const list = await screen.findByRole('list', {
-      name: 'Cards from the original app, newest first',
+      name: 'Cards from Q-Mintership 3, newest first',
     });
     expect(
       await within(list).findByText(`${PEOPLE.nominatedSigning.name} for the MINTER group`)
@@ -391,9 +391,9 @@ describe('History page: the original app', () => {
 
   it('filters to Minter Admin proposals', async () => {
     await renderPage(<HistoryPage />, { persona: 'learner', path: '/history' });
-    await screen.findByRole('list', { name: 'Cards from the original app, newest first' });
+    await screen.findByRole('list', { name: 'Cards from Q-Mintership 3, newest first' });
     await userEvent.click(screen.getByRole('button', { name: 'Admin proposals' }));
-    const list = screen.getByRole('list', { name: 'Cards from the original app, newest first' });
+    const list = screen.getByRole('list', { name: 'Cards from Q-Mintership 3, newest first' });
     expect(within(list).getAllByRole('listitem')).toHaveLength(2);
     expect(await within(list).findByText('Admin proposal: add')).toBeInTheDocument();
     expect(await within(list).findByText('Admin proposal: remove')).toBeInTheDocument();
@@ -411,16 +411,16 @@ describe('History page: the original app', () => {
           answerDecrypt(world, 'admin', request)
         ),
     });
-    await screen.findByRole('list', { name: 'Cards from the original app, newest first' });
+    await screen.findByRole('list', { name: 'Cards from Q-Mintership 3, newest first' });
     expect(qortalCallsFor('DECRYPT_DATA')).toEqual([]);
     await userEvent.click(screen.getByRole('button', { name: 'Admin Board' }));
     expect(
       screen.getByText(
-        /^The original Minter Admin board: cards proposed in the original Q-Mintership/
+        /^Q-Mintership 3's Minter Admin board: cards proposed before Q-Mintership 4.0.0/
       )
     ).toBeInTheDocument();
     const list = await screen.findByRole('list', {
-      name: 'Cards from the original app, newest first',
+      name: 'Cards from Q-Mintership 3, newest first',
     });
     expect(await within(list).findByText('Remove Member 12 from MINTER?')).toBeInTheDocument();
     expect(within(list).getByText(/About Member 12 · by Admin B/)).toBeInTheDocument();
@@ -434,7 +434,7 @@ describe('History page: the original app', () => {
 
   it('offers the Admin Board to Minter Admins only, and decrypts nothing for others', async () => {
     await renderPage(<HistoryPage />, { persona: 'learner', path: '/history' });
-    await screen.findByRole('list', { name: 'Cards from the original app, newest first' });
+    await screen.findByRole('list', { name: 'Cards from Q-Mintership 3, newest first' });
     expect(screen.queryByRole('button', { name: 'Admin Board' })).toBeNull();
     expect(qortalCallsFor('DECRYPT_DATA')).toEqual([]);
     expect(

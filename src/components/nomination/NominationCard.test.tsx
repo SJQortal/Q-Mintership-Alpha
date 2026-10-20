@@ -40,7 +40,7 @@ describe('NominationCard', () => {
       name: 'Copy link to the nomination of Mia Met',
     });
     await userEvent.click(button);
-    expect(writeText).toHaveBeenCalledWith(`qortal://APP/Q-Mintership+/nominations/${ADDR.met}`);
+    expect(writeText).toHaveBeenCalledWith(`qortal://APP/Q-Mintership/nominations/${ADDR.met}`);
     // Said once, from a status region; the button shows it but keeps its name.
     const said = () =>
       within(card)

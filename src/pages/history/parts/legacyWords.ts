@@ -1,4 +1,4 @@
-/** Plain words for the original app's cards: what kind, about whom, and why one can't show. */
+/** Plain words for Q-Mintership 3's cards: what kind, about whom, and why one can't show. */
 import { LegacyUnreadableError, type LegacyCard, type LegacyCardRow } from '../../../data/legacy';
 import { QdnDeletedError } from '../../../data/qdn';
 import { formatDate } from '../../../utils/format';

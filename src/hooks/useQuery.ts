@@ -93,7 +93,7 @@ export function useQuery<T>(
 /**
  * Call `tick` every `ms` while the page is visible; pause while hidden and
  * catch up once when it comes back. After an error the pause doubles, up to
- * 8× (docs/QORTAL.md → Poll politely).
+ * 8× (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Poll politely).
  */
 export function usePoliteInterval(
   tick: () => Promise<unknown> | void,

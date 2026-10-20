@@ -1,6 +1,6 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 
-/** True below 600 px: phones, GO, and narrow Hub panes (docs/DESIGN.md). */
+/** True below 600 px: phones, GO, and narrow Hub panes (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md). */
 export function usePhoneLayout(): boolean {
   const theme = useTheme();
   return useMediaQuery(theme.breakpoints.down('sm'));

@@ -1,6 +1,6 @@
 /**
- * What an account posted on the original Q-Mintership's boards, under any of
- * its names (key `xlegacyby:<address>`), and its votes in the original app's
+ * What an account posted on Q-Mintership 3's boards, under any of
+ * its names (key `xlegacyby:<address>`), and its votes in Q-Mintership 3's
  * chain polls, read only when asked (key `xpollvotes:<address>`).
  *
  * Posted, by name (40 names a search, 100 rows a page, at most 3 pages,
@@ -16,7 +16,7 @@
  * Poll votes: one heavy address search for the newest 100 VOTE_ON_POLL
  * transactions, each mapped to the option it names through the poll's own
  * option list (Core lists options in the order they were made, so "No" can
- * be first). Only polls of the original app's public boards are listed; a
+ * be first). Only polls of Q-Mintership 3's public boards are listed; a
  * vote on an encrypted admin board card's poll or on another app's poll is
  * only counted. Read-only.
  */
@@ -140,7 +140,7 @@ export function legacyFromRows(
   };
 }
 
-/** What the account posted on the original app's boards. Key `xlegacyby:<address>`. */
+/** What the account posted on Q-Mintership 3's boards. Key `xlegacyby:<address>`. */
 export function loadLegacyBy(
   address: string,
   options: { force?: boolean } = {}
@@ -198,7 +198,7 @@ export interface PollVotes {
   votes: PollVote[];
   /** Votes on encrypted admin board cards' polls: counted only. */
   adminBoard: number;
-  /** Votes on polls that aren't the original app's: counted only. */
+  /** Votes on polls that aren't Q-Mintership 3's: counted only. */
   other: number;
   /** All of the newest 100 were read: there may be older ones. */
   truncated: boolean;

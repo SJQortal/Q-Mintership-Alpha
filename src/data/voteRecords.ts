@@ -1,5 +1,5 @@
 /**
- * Community votes (docs/apps/Q-Mintership+.md → Data contract): a Yes or No
+ * Community votes (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract): a Yes or No
  * from anyone who isn't a Minter Admin, so the admins can weigh the
  * community's view. Advisory: nothing on chain follows from it. On an open
  * nomination, or on a proposal to remove a member, ban an account or make a

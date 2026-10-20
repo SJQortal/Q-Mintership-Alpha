@@ -2,14 +2,14 @@
  * Links out of and into the app.
  *
  * - Copied app links use the app name with a literal `+` (Hub never decodes
- *   it; docs/QORTAL.md → Deep links). Path segments are encoded.
+ *   it; https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Deep links). Path segments are encoded.
  * - `qortal://` links inside records open through Hub's OPEN_NEW_TAB.
  */
 import { qortal } from '../qortal/client';
 import { LINK_APP_NAME, ORIGINAL_APP_LINK } from '../constants/plus';
 
 /**
- * `qortal://APP/Q-Mintership+/people/Q…` for sharing. `path` starts with "/",
+ * `qortal://APP/Q-Mintership/people/Q…` for sharing. `path` starts with "/",
  * and may end in the app's own query ("?kind=names"), kept as it is.
  */
 export function appLink(path: string): string {
@@ -60,7 +60,7 @@ export function linkName(link: string): string | null {
 
 export { ORIGINAL_APP_LINK };
 
-/** Opens the original app, when it has a link (constants/plus.ts). */
+/** Opens Q-Mintership 3, when it has a link (constants/plus.ts). */
 export function openOriginalApp(): Promise<boolean> {
   return ORIGINAL_APP_LINK ? openQortalLink(ORIGINAL_APP_LINK) : Promise.resolve(false);
 }

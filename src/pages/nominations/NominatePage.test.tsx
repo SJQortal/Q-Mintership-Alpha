@@ -190,7 +190,7 @@ describe('Nominate page: guards before anything is written', () => {
     await open('nominator', ADDR.approved);
     expect(
       await screen.findByText(
-        `qortal://APP/Q-Mintership+/explorer/account/${ADDR.approved}/mintership`,
+        `qortal://APP/Q-Mintership/explorer/account/${ADDR.approved}/mintership`,
         undefined,
         {
           timeout: 4000,
@@ -323,9 +323,9 @@ describe('Nominate page: writing and publishing', () => {
       await screen.findByRole('heading', { name: 'Let Zoë Newcomer know' })
     ).toBeInTheDocument();
     // The link opens the nomination's own page, where they find Accept.
-    const link = `qortal://APP/Q-Mintership+/nominations/${ADDR.newcomerName}`;
+    const link = `qortal://APP/Q-Mintership/nominations/${ADDR.newcomerName}`;
     expect(screen.getByText(link)).toBeInTheDocument();
-    expect(screen.queryByText(/qortal:\/\/APP\/Q-Mintership\+\/explorer\/account\//)).toBeNull();
+    expect(screen.queryByText(/qortal:\/\/APP\/Q-Mintership\/explorer\/account\//)).toBeNull();
     expect(screen.getByRole('article', { name: /Nomination of Zoë Newcomer/ })).toBeInTheDocument();
     // The form (and its button) went: focus is on the news, not on the page.
     await waitFor(() =>

@@ -25,8 +25,8 @@ afterEach(() => vi.useRealTimers());
 
 describe('the last visit', () => {
   it('is kept per account and group under the app prefix', () => {
-    expect(lastVisitKey('QAbc', 694)).toBe('qmintershipplus-last-visit-QAbc-694');
-    expect(lastVisitKey('QAbc')).toBe('qmintershipplus-last-visit-QAbc-694');
+    expect(lastVisitKey('QAbc', 694)).toBe('qmintership-last-visit-QAbc-694');
+    expect(lastVisitKey('QAbc')).toBe('qmintership-last-visit-QAbc-694');
     // The mock world writes the same key for the screenshot check.
     expect(lastVisitStorageKey('QAbc')).toBe(lastVisitKey('QAbc'));
   });

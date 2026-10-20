@@ -1,5 +1,5 @@
 /**
- * Settings (docs/DESIGN.md → Settings page): Account, Appearance, the app's
+ * Settings (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Settings page): Account, Appearance, the app's
  * own Mintership section, Notifications, Muted names, and About with the
  * changelog.
  */

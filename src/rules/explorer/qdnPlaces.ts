@@ -9,7 +9,7 @@
  *
  * After MA Helper's portfolio links (Simon: "Minter Helper had some of the
  * links capability"), checked against each app's routes and identifiers
- * (docs/apps/Q-Mintership+.md → item 127):
+ * (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → item 127):
  *
  * - Q-Tube: a video's DOCUMENT `qtube_vid_…_metadata` (its VIDEO is the same
  *   id less `_metadata`), PLAYLIST `qtube_playlist_…`, the channel's
@@ -30,7 +30,7 @@
  *   Q-Shop (stores, catalogues, reviews), Q-Blog, Q-Music, Ear-Bump.
  * - A website or a Q-App itself (its default identifier).
  * - Q-Mintership's own records open their page here: a nomination, its
- *   support and votes, a comment, a card of the original app.
+ *   support and votes, a comment, a card of Q-Mintership 3.
  *
  * Encrypted resources never get here (the Explorer doesn't look inside
  * them). Anything else gets no place: its Open File stays.
@@ -54,7 +54,7 @@ export const QAPP = {
 
 /**
  * `qortal://APP/<app>/<segments…>`: the app's name as written (Hub never
- * decodes it, so a + app would keep its `+`), each segment encoded.
+ * decodes it, so an app name with a `+` keeps it), each segment encoded.
  */
 export function qappLink(app: string, ...segments: string[]): string {
   const path = segments.map((segment) => encodeURIComponent(segment)).join('/');

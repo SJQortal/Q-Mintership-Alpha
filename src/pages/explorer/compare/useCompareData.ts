@@ -6,7 +6,7 @@
  * - At once, per account: the account (xacct), its primary name, its
  *   MINTER status (status:, not polled), where its first QORT came from
  *   (xfirst), its groups (xgroups), its newest 100 QORT payments each way
- *   (xpay, light), its Q-Mintership+ records (xmade), its trade-portal
+ *   (xpay, light), its Q-Mintership records (xmade), its trade-portal
  *   sales (xtrades, by public key), and two heavy searches through the
  *   limiter with the scope 'compare' (xlinks, xassets); per pair, the
  *   payments each way (xpair); once, who mints now (xonline).

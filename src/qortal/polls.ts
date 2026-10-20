@@ -1,7 +1,7 @@
 /**
- * The original Q-Mintership's chain polls, read-only. Every old board card
+ * Q-Mintership 3's chain polls, read-only. Every old board card
  * has a poll named `<cardIdentifier>-poll` with the options Yes and No.
- * Q-Mintership+ has no votes: these reads only show an old card's result in
+ * Q-Mintership has no votes: these reads only show an old card's result in
  * History, so there is no retry loop and nothing here can vote or create.
  *
  * Core lists the options in the order they were created ("No" can come
@@ -13,7 +13,7 @@ import { CoreHttpError, coreJson } from './client';
 export interface PollInfo {
   pollName: string;
   description: string;
-  /** The address the poll belongs to. The original app only listed a card when this was its publisher. */
+  /** The address the poll belongs to. Q-Mintership 3 only listed a card when this was its publisher. */
   owner: string;
   published: number;
   options: string[];

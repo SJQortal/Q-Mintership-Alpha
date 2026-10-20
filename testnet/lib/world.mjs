@@ -139,7 +139,7 @@ export async function makeGroup(key, spec) {
       fields: {
         creatorPublicKey: owner.publicKey,
         groupName: name,
-        description: `Q-Mintership+ testnet group (${key})`,
+        description: `Q-Mintership testnet group (${key})`,
         isOpen: false,
         approvalThreshold: spec.threshold ?? 'PCT40',
         minimumBlockDelay: spec.minDelay ?? 5,
@@ -176,7 +176,7 @@ export async function makeGroup(key, spec) {
           ownerPublicKey: owner.publicKey,
           groupId,
           newOwner: NULL_OWNER,
-          newDescription: `Q-Mintership+ testnet group (${key})`,
+          newDescription: `Q-Mintership testnet group (${key})`,
           newIsOpen: false,
           newApprovalThreshold: spec.threshold ?? 'PCT40',
           newMinimumBlockDelay: spec.minDelay ?? 5,

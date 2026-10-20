@@ -1,5 +1,5 @@
 /**
- * Every write goes through this dialog (docs/DESIGN.md → Dialogs: say what
+ * Every write goes through this dialog (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Dialogs: say what
  * will happen and what it costs before Hub's own confirmation opens):
  *
  * 1. Intro: what will happen, each Hub confirmation it takes (with what Hub

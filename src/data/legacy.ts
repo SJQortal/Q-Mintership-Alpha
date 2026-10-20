@@ -1,6 +1,6 @@
 /**
- * The original Q-Mintership's boards, read-only, for History and person
- * pages (docs/apps/Q-Mintership+.md → Data contract → Legacy reads):
+ * Q-Mintership 3's boards, read-only, for History and person
+ * pages (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract → Legacy reads):
  *
  * - nomination cards: BLOG_POST `Minter-board-card-<id>`;
  * - Minter Admin proposals (the add/remove admin board): BLOG_POST `QM-AR-card-<id>`;
@@ -12,7 +12,7 @@
  * Searches are paged and bounded, bodies are cached per version, and the
  * search row is trusted over the body: the publisher is the row's name, and
  * when another name publishes under a card's identifier the original
- * publisher's card wins (as in the original app).
+ * publisher's card wins (as in Q-Mintership 3).
  *
  * Card and comment HTML is never rendered as HTML. It becomes plain
  * paragraphs, and `qortal://` links are pulled out to show as buttons.
@@ -410,7 +410,7 @@ export interface LegacyPoll {
   yes: number;
   no: number;
   total: number;
-  /** False when the poll doesn't belong to the card's publisher (the original app hid such cards); null when unknown. */
+  /** False when the poll doesn't belong to the card's publisher (Q-Mintership 3 hid such cards); null when unknown. */
   ownerMatches: boolean | null;
 }
 

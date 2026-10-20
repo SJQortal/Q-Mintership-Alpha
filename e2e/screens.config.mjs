@@ -1,8 +1,8 @@
 /**
- * Q-Mintership+ for the shared screenshot check (scripts/screens.mjs):
+ * Q-Mintership for the screenshot check (e2e/screens.mjs):
  *
  *   QPLUS_CHROMIUM=~/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome \
- *     scripts/screens.mjs Q-Mintership+ [--only home-admin,decisions] [--themes hub30] [--mode light]
+ *     node e2e/screens.mjs [--only home-admin,decisions] [--themes hub30] [--mode light]
  *
  * The mock node is the shared world (e2e/world.mjs): a MINTER group with a
  * person in every status and a decision in every state. `?as=<persona>` in a
@@ -257,7 +257,7 @@ const withQuiz = (status) => async (page) => {
   await page.addInitScript(
     ([key, value]) => window.localStorage.setItem(key, value),
     [
-      'qmintershipplus-explorer-quiz',
+      'qmintership-explorer-quiz',
       JSON.stringify(status === 'choice' ? quizChoice() : quizState(status)),
     ]
   );
@@ -333,7 +333,7 @@ const visits = lastVisitSnapshots(world);
 const asList = async (page) => {
   await page.addInitScript(
     ([key, value]) => window.localStorage.setItem(key, value),
-    ['qmintershipplus-connections-view', 'list']
+    ['qmintership-connections-view', 'list']
   );
   await page.reload({ waitUntil: 'load' });
   await explorerSettle(page);
@@ -386,8 +386,8 @@ const hubAlertsOffered = async (page) => {
 };
 
 export default {
-  name: 'Q-Mintership+',
-  themeKey: 'qmintershipplus-ui-theme',
+  name: 'Q-Mintership',
+  themeKey: 'qmintership-ui-theme',
   ignoreErrors: /favicon/,
 
   async setup({ browser }) {
@@ -420,10 +420,10 @@ export default {
     // opened (withQuiz sets it again, after this) mustn't cover the screens after it.
     `(() => {
       try {
-        localStorage.removeItem('qmintershipplus-explorer-quiz');
+        localStorage.removeItem('qmintership-explorer-quiz');
         // The circle a circle screen picked is saved too: the screens after it start as a list.
-        localStorage.removeItem('qmintershipplus-connections-view');
-        localStorage.removeItem('qmintershipplus-connections-circle-order');
+        localStorage.removeItem('qmintership-connections-view');
+        localStorage.removeItem('qmintership-connections-circle-order');
       } catch (e) {}
     })();`,
   ],
@@ -616,7 +616,7 @@ export default {
       after: async (page) => {
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-decisions-order', JSON.stringify('type')]
+          ['qmintership-decisions-order', JSON.stringify('type')]
         );
         await page.reload({ waitUntil: 'load' });
         await settle(page);
@@ -725,7 +725,7 @@ export default {
             }
           },
           [
-            `qmintershipplus-history-seen-${ADDR.admin}`,
+            `qmintership-history-seen-${ADDR.admin}`,
             JSON.stringify({ v: 1, height: TIP - 6_000 }),
           ]
         );
@@ -735,7 +735,7 @@ export default {
         await page.waitForTimeout(400);
       },
     },
-    // An old card from the original app (e2e/world-legacy.mjs), with its poll and comments.
+    // An old card from Q-Mintership 3 (e2e/world-legacy.mjs), with its poll and comments.
     {
       key: 'legacy-card',
       path: '/history/card/Minter-board-card-bQ7xK2?as=learner',
@@ -780,7 +780,7 @@ export default {
             }
           },
           [
-            `qmintershipplus-history-seen-${ADDR.admin}`,
+            `qmintership-history-seen-${ADDR.admin}`,
             JSON.stringify({ v: 1, height: TIP - 6_000 }),
           ]
         );
@@ -805,7 +805,7 @@ export default {
         // Set before the app starts, so its first read is the old target.
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-seen-target-694', JSON.stringify(shift.seenBefore)]
+          ['qmintership-seen-target-694', JSON.stringify(shift.seenBefore)]
         );
         await page.reload({ waitUntil: 'load' });
         await settle(page);
@@ -936,10 +936,10 @@ export default {
         await page.addInitScript(
           ([key, value]) => {
             for (const k of Object.keys(window.localStorage))
-              if (k.startsWith('qmintershipplus-last-visit-')) window.localStorage.removeItem(k);
+              if (k.startsWith('qmintership-last-visit-')) window.localStorage.removeItem(k);
             window.localStorage.setItem(key, value);
           },
-          ['qmintershipplus-seen-target-694', JSON.stringify({ adminCount: 21, needed: 9 })]
+          ['qmintership-seen-target-694', JSON.stringify({ adminCount: 21, needed: 9 })]
         );
         await page.reload({ waitUntil: 'load' });
         await settle(page);
@@ -973,7 +973,7 @@ export default {
       key: 'settings-muted',
       path: '/settings?as=admin',
       after: async (page) => {
-        const KEY = 'qmintershipplus-muted-names';
+        const KEY = 'qmintership-muted-names';
         await page.addInitScript(
           ([key, value]) => {
             try {
@@ -1238,7 +1238,7 @@ export default {
       after: async (page) => {
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-explorer-activity-first-read', '100']
+          ['qmintership-explorer-activity-first-read', '100']
         );
         await page.reload({ waitUntil: 'load' });
         await explorerSettle(page);
@@ -1324,7 +1324,7 @@ export default {
       after: async (page) => {
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-connections-view', 'circle']
+          ['qmintership-connections-view', 'circle']
         );
         await page.reload({ waitUntil: 'load' });
         await explorerSettle(page);
@@ -1341,7 +1341,7 @@ export default {
       after: async (page) => {
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-connections-view', 'circle']
+          ['qmintership-connections-view', 'circle']
         );
         await page.reload({ waitUntil: 'load' });
         await explorerSettle(page);
@@ -1357,7 +1357,7 @@ export default {
       after: async (page) => {
         await page.addInitScript(
           ([key, value]) => window.localStorage.setItem(key, value),
-          ['qmintershipplus-connections-view', 'circle']
+          ['qmintership-connections-view', 'circle']
         );
         await page.reload({ waitUntil: 'load' });
         await explorerSettle(page);
@@ -1375,8 +1375,8 @@ export default {
         await page.addInitScript(
           (pairs) => pairs.forEach(([key, value]) => window.localStorage.setItem(key, value)),
           [
-            ['qmintershipplus-connections-view', 'circle'],
-            ['qmintershipplus-connections-circle-order', 'qort'],
+            ['qmintership-connections-view', 'circle'],
+            ['qmintership-connections-circle-order', 'qort'],
           ]
         );
         await page.reload({ waitUntil: 'load' });

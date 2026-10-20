@@ -1,5 +1,5 @@
 /**
- * The one dialog frame (docs/DESIGN.md → Mobile → Dialogs): centred on
+ * The one dialog frame (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile → Dialogs): centred on
  * wider layouts, full screen under 600 px (sized to Hub's frame, not 100vh),
  * 44 px actions, a labelled title and a close button on phones.
  * Adapted from Q-Mail+.

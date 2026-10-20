@@ -132,7 +132,7 @@ describe('postComment', () => {
     });
     await postComment(me, { key: ADDR.nominatedWaiting, text: 'Hello', replyToName: 'Wren' });
     const [reply, own, top] = qortalCallsFor('PUBLISH_QDN_RESOURCE');
-    expect(reply.description).toBe(`~qmpre${nameMark('Wren Waiting')}~ A reply in Q-Mintership+`);
+    expect(reply.description).toBe(`~qmpre${nameMark('Wren Waiting')}~ A reply in Q-Mintership`);
     expect(own.description).toBeUndefined();
     expect(top.description).toBeUndefined();
   });
@@ -173,7 +173,7 @@ describe('edit and delete', () => {
     const [editCall, deleteCall] = qortalCallsFor('PUBLISH_QDN_RESOURCE');
     expect(editCall.identifier).toBe(ids.sameHere);
     // An edit keeps the reply's marker; a deletion drops it (nothing to read any more).
-    expect(editCall.description).toBe(`~qmpre${nameMark('Member 7')}~ A reply in Q-Mintership+`);
+    expect(editCall.description).toBe(`~qmpre${nameMark('Member 7')}~ A reply in Q-Mintership`);
     expect(deleteCall.description).toBeUndefined();
     expect(decode(editCall)).toEqual({
       v: 1,

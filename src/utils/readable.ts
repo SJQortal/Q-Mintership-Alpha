@@ -1,5 +1,5 @@
 /**
- * Status and accent colours as text that reads at 4.5:1 (docs/DESIGN.md) in
+ * Status and accent colours as text that reads at 4.5:1 (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md) in
  * all four themes. Accents such as success, warning and Classic's teal are
  * made for icons and fills; as small text on a light surface some fall below
  * 4.5:1. These keep the hue and darken it (lighten it in dark themes) just

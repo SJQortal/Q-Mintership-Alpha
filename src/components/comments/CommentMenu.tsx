@@ -1,6 +1,6 @@
 /**
  * A comment's "More" actions: a menu on wider layouts and a bottom sheet on
- * phones (docs/DESIGN.md → Mobile: menus open as sheets), like Propose. The
+ * phones (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile: menus open as sheets), like Propose. The
  * sheet is mounted only while open.
  */
 import { useState, type ReactNode } from 'react';

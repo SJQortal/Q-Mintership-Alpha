@@ -112,7 +112,7 @@ describe('the bars on screen', () => {
     const avatar = rail.querySelector('img');
     expect(avatar).toHaveAttribute('alt', '');
     expect(avatar?.getAttribute('src')).toMatch(/q-mintership-avatar|^data:image\/webp/);
-    const name = within(rail).getByText('Q-Mintership+');
+    const name = within(rail).getByText('Q-Mintership');
     expect(avatar?.compareDocumentPosition(name)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
     expect(rail).not.toHaveTextContent('QM+');
   });

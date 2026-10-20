@@ -1,5 +1,5 @@
 /**
- * Loading, empty and error states (docs/DESIGN.md → Components and states):
+ * Loading, empty and error states (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Components and states):
  * skeletons shaped like the content, one plain line about why a view is
  * empty plus the next action, and errors in plain words with Retry. Each
  * fades in as it appears (index.css → .qmp-fade).

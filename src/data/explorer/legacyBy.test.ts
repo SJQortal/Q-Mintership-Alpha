@@ -1,5 +1,5 @@
 /**
- * What an account posted in the original app (legacyBy.ts): its cards and
+ * What an account posted in Q-Mintership 3 (legacyBy.ts): its cards and
  * comment counts by exact name, never the bare `comment-` prefix other apps
  * use, the encrypted admin board as counts; and its poll votes, read through
  * the heavy-read slot and mapped by each poll's own option list.

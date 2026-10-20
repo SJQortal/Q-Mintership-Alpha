@@ -304,7 +304,7 @@ describe('Explorer world: QDN', () => {
     const nora = await get<Array<{ service: string; identifier: string }>>(
       `/arbitrary/resources/searchsimple?name=${encodeURIComponent('Nora Nominator')}&limit=100`
     );
-    // Her Q-Mintership+ records and her cards in the original app, oldest first.
+    // Her Q-Mintership records and her cards in Q-Mintership 3, oldest first.
     expect(new Set(nora.body.map((r) => r.service))).toEqual(new Set(['JSON', 'BLOG_POST']));
     expect(nora.body.map((r) => r.identifier)).toContain(`qmp-nomination-${ADDR.nominatedWaiting}`);
   });

@@ -23,13 +23,13 @@ describe('a qortal:// link in a record', () => {
 });
 
 describe('a link to share', () => {
-  it('keeps the + literal, encodes each segment and keeps the query as it is', () => {
-    expect(appLink('/')).toBe('qortal://APP/Q-Mintership+');
+  it("uses the app's link name, encodes each segment and keeps the query as it is", () => {
+    expect(appLink('/')).toBe('qortal://APP/Q-Mintership');
     expect(appLink('/explorer/account/Nora Nominator')).toBe(
-      'qortal://APP/Q-Mintership+/explorer/account/Nora%20Nominator'
+      'qortal://APP/Q-Mintership/explorer/account/Nora%20Nominator'
     );
     expect(appLink('/explorer/account/Q1/transactions?kind=names&q=ada+b')).toBe(
-      'qortal://APP/Q-Mintership+/explorer/account/Q1/transactions?kind=names&q=ada+b'
+      'qortal://APP/Q-Mintership/explorer/account/Q1/transactions?kind=names&q=ada+b'
     );
   });
 });

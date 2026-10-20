@@ -1,6 +1,6 @@
 /**
  * The status engine: who the signed-in account is, as far as MINTER is
- * concerned, so Home can speak to them (docs/apps/Q-Mintership+.md → Statuses).
+ * concerned, so Home can speak to them (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Statuses).
  *
  * Order (first match wins):
  *   outside Hub → signed out → Minter Admin → member (level 5+ / 0–4) →

@@ -1,5 +1,5 @@
 /**
- * Minter Admin poll writes (docs/apps/Q-Mintership+.md → Data contract):
+ * Minter Admin poll writes (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract):
  * ask, vote (republished to change it), comment (edit, delete) and share
  * with Minter Admins added since. Each is one PUBLISH_QDN_RESOURCE through
  * Hub, service DOCUMENT_PRIVATE, encrypted to every current Minter Admin who

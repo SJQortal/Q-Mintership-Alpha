@@ -141,7 +141,7 @@ describe('Names: every name', () => {
 
     await user.click(asList);
     expect(asList).toHaveAttribute('aria-pressed', 'true');
-    expect(window.localStorage.getItem('qmintershipplus-names-view')).toBe('list');
+    expect(window.localStorage.getItem('qmintership-names-view')).toBe('list');
     await expectNoAxeViolations(container);
     unmount();
     resetExplorerState();
@@ -151,7 +151,7 @@ describe('Names: every name', () => {
       'aria-pressed',
       'true'
     );
-    window.localStorage.removeItem('qmintershipplus-names-view');
+    window.localStorage.removeItem('qmintership-names-view');
   });
 
   it('says when it has names but no primary name, and why it can’t pick one', async () => {

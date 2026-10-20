@@ -3,7 +3,7 @@
  * SAVE_FILE, which asks the user where to keep it. It signs nothing,
  * publishes nothing and costs nothing; the Explorer's other Hub request is
  * OPEN_NEW_TAB. Adapted from Q-Share+ (components/common/FileElement.tsx,
- * saveFromNode), as docs/QORTAL.md pitfall 17 says:
+ * saveFromNode), as https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md pitfall 17 says:
  *
  * - desktop Hub, under 100 MB: the bytes as a blob, which Hub saves
  *   straight to Downloads;

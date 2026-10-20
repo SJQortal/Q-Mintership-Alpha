@@ -44,8 +44,8 @@ describe('alert rules', () => {
     expect(alertRules('admin', ME)).toEqual([
       {
         notificationId: 'qmp-new-nomination',
-        link: 'qortal://APP/Q-Mintership+/decisions',
-        image: '/arbitrary/THUMBNAIL/Q-Mintership%2B/qortal_avatar?async=true',
+        link: 'qortal://APP/Q-Mintership/decisions',
+        image: '/arbitrary/THUMBNAIL/Q-Mintership/qortal_avatar?async=true',
         message: { en: 'A new nomination was published. Open it to check it and approve first.' },
         filters: {
           service: 'JSON',
@@ -60,8 +60,8 @@ describe('alert rules', () => {
   it('tells a nominee about records about them only', () => {
     const rules = alertRules('nominee', ME);
     expect(rules.map((r) => [r.notificationId, r.filters.identifier, r.link])).toEqual([
-      ['qmp-nominated-you', `qmp-nomination-${ME}`, 'qortal://APP/Q-Mintership+'],
-      ['qmp-supported-you', `qmp-support-${ME}`, 'qortal://APP/Q-Mintership+'],
+      ['qmp-nominated-you', `qmp-nomination-${ME}`, 'qortal://APP/Q-Mintership'],
+      ['qmp-supported-you', `qmp-support-${ME}`, 'qortal://APP/Q-Mintership'],
     ]);
     expect(rules.every((r) => r.filters.service === 'JSON' && r.filters.excludeBlocked)).toBe(true);
     expect(rules.every((r) => r.message.en.length > 0)).toBe(true);
@@ -77,8 +77,8 @@ describe('alert rules', () => {
     expect(alertRules('nominator', ME, [N1])).toEqual([
       {
         notificationId: `qmp-supported-yours-${N1}`,
-        link: `qortal://APP/Q-Mintership+/nominations/${N1}`,
-        image: '/arbitrary/THUMBNAIL/Q-Mintership%2B/qortal_avatar?async=true',
+        link: `qortal://APP/Q-Mintership/nominations/${N1}`,
+        image: '/arbitrary/THUMBNAIL/Q-Mintership/qortal_avatar?async=true',
         message: { en: 'Someone added their support to a nomination you made.' },
         filters: {
           service: 'JSON',
@@ -301,7 +301,7 @@ describe('alerts for replies to your comments (Simon, 2026-10-19)', () => {
     const [open] = replyAlertRules('none', 'Ada Lovelace');
     expect(open).toEqual({
       notificationId: `qmp-replied-${MARK}`,
-      link: 'qortal://APP/Q-Mintership+/comments/{name}/{identifier}',
+      link: 'qortal://APP/Q-Mintership/comments/{name}/{identifier}',
       image: expect.stringContaining('qortal_avatar'),
       message: { en: 'Someone replied to your comment.' },
       filters: {

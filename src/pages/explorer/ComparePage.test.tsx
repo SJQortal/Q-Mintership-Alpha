@@ -328,7 +328,7 @@ describe('Compare: two accounts', () => {
     expect(text).toContain('Side by side:');
     expect(text).toContain('- MINTER status: same for all, Former member');
     expect(text).toContain(
-      `qortal://APP/Q-Mintership+/explorer/compare/${ADDR.kicked}/${ADDR.left}`
+      `qortal://APP/Q-Mintership/explorer/compare/${ADDR.kicked}/${ADDR.left}`
     );
     expect(text).not.toMatch(VERDICTS);
     expect(text).not.toContain(MESSAGE_CONTENT);

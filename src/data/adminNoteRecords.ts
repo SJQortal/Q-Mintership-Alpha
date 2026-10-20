@@ -1,5 +1,5 @@
 /**
- * Words for the Minter Admins only, encrypted to them (docs/apps/Q-Mintership+.md →
+ * Words for the Minter Admins only, encrypted to them (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md →
  * Data contract): additive QDN data with their own prefixes, published the
  * way Minter Admin polls are (service DOCUMENT_PRIVATE, encrypted by Hub to
  * every current Minter Admin who can sign, and the writer). The original

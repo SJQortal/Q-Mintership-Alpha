@@ -1,7 +1,7 @@
 /**
  * Facts about MINTER and Qortal Core this app is built on. Each one was
  * checked against Core 6.1.4–6.1.9 and a mainnet node on 2026-10-12
- * (docs/apps/Q-Mintership+.md → The new process).
+ * (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → The new process).
  */
 
 /**
@@ -28,7 +28,7 @@ function testnetGroupId(): number {
 export const NULL_OWNER = 'QdSnUy6sUiEnaN87dWmE92g1uQjrvPgrWG';
 
 /**
- * The time-to-live sent with INVITE_TO_GROUP (10 days, as the original app
+ * The time-to-live sent with INVITE_TO_GROUP (10 days, as Q-Mintership 3
  * sends). Hub refuses inviteTime 0, so the app sends 864000.
  */
 export const INVITE_TIME_SECONDS = 864_000;

@@ -2,7 +2,7 @@
  * How far an account has seen MINTER's History on this device: the chain
  * height its list reached the last time History was open, for the History
  * tab's count of what is new since (localStorage
- * `qmintershipplus-history-seen-<address>`, `{ v: 1, height }`). Only ever
+ * `qmintership-history-seen-<address>`, `{ v: 1, height }`). Only ever
  * moves forward. Without storage (a private window) it lasts the page.
  */
 import { useCallback, useSyncExternalStore } from 'react';

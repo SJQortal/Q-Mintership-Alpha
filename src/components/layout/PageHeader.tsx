@@ -1,7 +1,7 @@
 /**
  * The sticky, translucent page header: Back on sub-pages, the title, actions
  * on the right. On phones it slides away when scrolling down and comes back
- * when scrolling up (docs/DESIGN.md → Mobile).
+ * when scrolling up (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile).
  *
  * A new page's title and actions fade in (index.css → .qmp-reveal-fade);
  * the bar itself stays put.

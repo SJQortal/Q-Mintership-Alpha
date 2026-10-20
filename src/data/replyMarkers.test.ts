@@ -23,7 +23,7 @@ describe('the reply marker', () => {
 
   it('opens the description, so a prefix match finds it', () => {
     expect(replyDescription('Wren Waiting')).toBe(
-      `${replyMarker('Wren Waiting')} A reply in Q-Mintership+`
+      `${replyMarker('Wren Waiting')} A reply in Q-Mintership`
     );
   });
 

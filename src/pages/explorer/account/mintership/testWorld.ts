@@ -44,7 +44,7 @@ export function addPollVotes(world: World, voter: string): void {
   );
 }
 
-/** A Q-Mintership+ record (service JSON) published under `name`. */
+/** A Q-Mintership record (service JSON) published under `name`. */
 export function addRecord(
   world: World,
   name: string,

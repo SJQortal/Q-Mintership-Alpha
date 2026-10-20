@@ -92,7 +92,7 @@ const router = createBrowserRouter(
         { path: 'comments/:name/:identifier', element: <CommentLinkPage /> },
         // The Explorer: any account or transaction, read-only.
         ...explorerRoutes,
-        // Old routes of the scaffold and the original app's boards.
+        // Old routes of the scaffold and Q-Mintership 3's boards.
         { path: 'minters/*', element: <Navigate to={decisionsViewPath('nominations')} replace /> },
         { path: 'forum/*', element: <Navigate to="/" replace /> },
         { path: 'stats/*', element: <Navigate to={PATHS.activity} replace /> },

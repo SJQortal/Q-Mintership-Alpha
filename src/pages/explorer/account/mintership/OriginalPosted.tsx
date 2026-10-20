@@ -1,6 +1,6 @@
 /**
- * "In the original app, under any of their names": the cards they posted on
- * the original Q-Mintership's boards (each read as it shows, shared with
+ * "In Q-Mintership 3, under any of their names": the cards they posted on
+ * Q-Mintership 3's boards (each read as it shows, shared with
  * History), how many comments they wrote on cards, the encrypted admin
  * board as counts only, and their votes in the cards' chain polls on
  * request. Read when the section nears the screen
@@ -42,7 +42,7 @@ function cachedIndex(): LegacyIndex | undefined {
 
 /**
  * Their cards, less any posted under an identifier another name used first
- * (the original app, and History, show that first card), when History's
+ * (Q-Mintership 3, and History, show that first card), when History's
  * index of every card is already in hand: this never reads it.
  */
 function useOwnCards(posted: LegacyBy): { own: LegacyCardRow[]; copies: number } {
@@ -150,7 +150,7 @@ function VoteRow({ vote }: { vote: PollVote }) {
   );
 }
 
-/** Their votes in the original app's chain polls, read when asked (the search is heavy). */
+/** Their votes in Q-Mintership 3's chain polls, read when asked (the search is heavy). */
 export function PollVotesPanel({ address }: { address: string }) {
   const key = `xpollvotes:${address}`;
   const [asked, setAsked] = useState(() => peekQuery(key) !== undefined);

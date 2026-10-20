@@ -1,5 +1,5 @@
 /**
- * The original app used `#` hash routes for deep links to a board card, e.g.
+ * Q-Mintership 3 used `#` hash routes for deep links to a board card, e.g.
  * `#/minter/<cardIdentifier>/<section>` or `#?board=minter&card=…`, and plain
  * relative hrefs (`MINTERS`, `ADMINBOARD`, …) for its nav buttons. Existing
  * links in chat and forum posts still use those forms, so this module parses
@@ -54,7 +54,7 @@ function safeDecodeRouteSegment(value: unknown = ''): string {
   }
 }
 
-/** The legacy link form, kept so links can still be shared with users of the original app. */
+/** The legacy link form, kept so links can still be shared with users of Q-Mintership 3. */
 export function buildBoardRouteHash(route: {
   board?: string;
   cardIdentifier?: string;
@@ -141,7 +141,7 @@ const LEGACY_HREFS: Record<string, string> = {
 
 /**
  * The React route for a legacy relative href such as `MINTERS`, or null.
- * The original app's hrefs were one segment at the app's root, so only a
+ * Q-Mintership 3's hrefs were one segment at the app's root, so only a
  * one-segment path counts (after Core's `/render/APP/<name>` prefix): a name
  * such as "Tools" in `/people/Tools` or `/explorer/account/Tools` is a name,
  * not an old nav button.

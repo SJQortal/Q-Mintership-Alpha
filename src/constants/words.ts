@@ -1,13 +1,13 @@
 /**
  * Words used on more than one screen, kept in one place so every screen says
- * the same thing (docs/DESIGN.md → Copy: sentence case) and a change of
+ * the same thing (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Copy: sentence case) and a change of
  * wording is one edit.
  */
 
 /**
  * The main action of level 5+ members and Minter Admins: start a nomination.
  * Every button, link, page title and empty-state action that offers it reads
- * this one constant, in sentence case (docs/DESIGN.md → Copy). To show it in
+ * this one constant, in sentence case (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Copy). To show it in
  * title case instead, change it here to 'Propose Nomination'.
  */
 export const PROPOSE_NOMINATION = 'Propose nomination';

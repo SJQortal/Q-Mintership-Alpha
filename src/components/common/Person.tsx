@@ -45,7 +45,7 @@ export interface PersonChipProps {
 
 /**
  * Avatar + name (+ a second line), linking to the person's page. The whole
- * chip, at least 44 px tall, is the link's tap area (docs/DESIGN.md → Touch),
+ * chip, at least 44 px tall, is the link's tap area (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Touch),
  * while the link itself stays the name, so the second line is still read.
  */
 export function PersonChip({

@@ -543,7 +543,7 @@ describe('comments on a poll', () => {
     const replies = within(thread).getByRole('list', { name: 'Replies to Admin C' });
     expect(within(replies).getByText(/Level isn't everything/)).toBeVisible();
     // A qortal:// link in a comment is a button, as in public comments.
-    expect(within(thread).getByRole('button', { name: /Q-Mintership\+/ })).toBeVisible();
+    expect(within(thread).getByRole('button', { name: /Q-Mintership/ })).toBeVisible();
 
     await u.type(within(thread).getByRole('textbox', { name: 'Write a comment' }), 'Count me in.');
     expect(

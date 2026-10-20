@@ -1,7 +1,7 @@
 /**
  * Public comments on decisions and nominations, and the Minter Admins' small
- * "hidden" records (docs/apps/Q-Mintership+.md → Data contract). Both are
- * additive QDN data with their own prefixes: the original app never reads or
+ * "hidden" records (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract). Both are
+ * additive QDN data with their own prefixes: Q-Mintership 3 never reads or
  * writes them.
  *
  * Comment  service JSON, identifier `qmp-comment-<key>-<id>`, published by

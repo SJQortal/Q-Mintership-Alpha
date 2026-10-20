@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Q-Mintership+'s private testnet (dev-only; nothing here is in the app).
+ * Q-Mintership's private testnet (dev-only; nothing here is in the app).
  *
  *   node testnet/testnet.mjs init     fresh keys, chain config and settings in ~/.qmp-testnet
  *   node testnet/testnet.mjs start    start the node in its own network namespace

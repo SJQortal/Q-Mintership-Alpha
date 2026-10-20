@@ -798,7 +798,7 @@ describe('copy findings', () => {
       common: [{ parts: [{ kind: 'text', text: 'Both paid K' }] }],
       commonNotes: ['First seen 5 blocks apart'],
       timeline: ['Block 1,364,165 · A: first QORT payment from H'],
-      link: 'qortal://APP/Q-Mintership+/explorer/compare/a/b',
+      link: 'qortal://APP/Q-Mintership/explorer/compare/a/b',
       nameOf: (address) => (address === A ? 'Kit' : null),
     });
     expect(text).toBe(
@@ -825,7 +825,7 @@ describe('copy findings', () => {
         'Timeline together:',
         '- Block 1,364,165 · A: first QORT payment from H',
         '',
-        'qortal://APP/Q-Mintership+/explorer/compare/a/b',
+        'qortal://APP/Q-Mintership/explorer/compare/a/b',
       ].join('\n')
     );
     expect(text).not.toMatch(VERDICTS);
@@ -867,7 +867,7 @@ describe('copy findings', () => {
       ],
       timeline: [],
       timelineStatus: 'Still reading for the timeline.',
-      link: 'qortal://APP/Q-Mintership+/explorer/compare/a/b/c',
+      link: 'qortal://APP/Q-Mintership/explorer/compare/a/b/c',
     });
     expect(text).toContain(
       [

@@ -1,7 +1,7 @@
 /**
  * The target this device saw last, per group: Decisions says when it has
  * changed since the last visit or refresh, and why. Kept in localStorage
- * under the app's prefix (`qmintershipplus-seen-target-694`); a private
+ * under the app's prefix (`qmintership-seen-target-694`); a private
  * window just never shows the note.
  */
 import { useEffect, useState } from 'react';

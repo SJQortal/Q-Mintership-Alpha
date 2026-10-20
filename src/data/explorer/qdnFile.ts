@@ -12,7 +12,7 @@
  * - Where it stands on the node, `/arbitrary/resource/status/…`: first as
  *   it is, then with `build=true` while the node gets it (a resource whose
  *   parts are all there is put together before Core answers; without it,
- *   it can stay DOWNLOADED: docs/QORTAL.md). Never cached.
+ *   it can stay DOWNLOADED: https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md). Never cached.
  * - Its latest version, one `searchsimple` page for its name and service
  *   (`xqdnlatest:…`, 3 minutes): a transaction may have published an
  *   earlier one, and Core serves the latest.

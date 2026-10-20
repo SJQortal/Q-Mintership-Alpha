@@ -172,7 +172,7 @@ describe('Original card page', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Proposed in the original Q-Mintership. Encrypted to the Minter Admins, read-only.'
+        'Proposed before Q-Mintership 4.0.0. Encrypted to the Minter Admins, read-only.'
       )
     ).toBeInTheDocument();
     expect(await screen.findByText('5 yes')).toBeInTheDocument();
@@ -213,7 +213,7 @@ describe('Original card page', () => {
     expect(await screen.findByText("Your node doesn't know this card.")).toBeInTheDocument();
     cleanup();
     await open('not-a-card');
-    expect(await screen.findByText("That isn't a card from the original app.")).toBeInTheDocument();
+    expect(await screen.findByText("That isn't a card from Q-Mintership 3.")).toBeInTheDocument();
   });
 
   it('says so when a card was deleted, and lets the reader try again', async () => {

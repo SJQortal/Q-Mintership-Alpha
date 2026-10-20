@@ -294,7 +294,7 @@ function NominatedNow() {
             <li key={nomination.nominee}>
               <PersonChip
                 address={nomination.nominee}
-                // Unnamed (proposed on chain, as in the original app): looked up.
+                // Unnamed (proposed on chain, as in Q-Mintership 3): looked up.
                 name={nomination.nomineeName ?? undefined}
                 size={32}
               />

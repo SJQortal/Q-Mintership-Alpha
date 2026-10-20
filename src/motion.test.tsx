@@ -298,7 +298,7 @@ describe('content arriving', () => {
     expect(animation(screen.getByText('A block')).duration).toBe('0.01ms');
   });
 
-  it('times every entrance from one place, inside the 150–200 ms of docs/DESIGN.md', () => {
+  it('times every entrance from one place, inside the 150–200 ms of https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md', () => {
     // Every rule that times an animation, except Reduce's, which cuts them.
     const rules = [...(sheet.sheet?.cssRules ?? [])].filter(
       (r): r is CSSStyleRule =>

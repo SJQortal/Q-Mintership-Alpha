@@ -105,23 +105,23 @@ describe('Mintership words', () => {
       truncated: true,
     };
     expect(words.pollVotesSummary(votes)).toBe(
-      '3 votes in 2 original-app polls (in their newest 100 poll votes): 1 Yes, 1 No, 1 other or unread.'
+      '3 votes in 2 Q-Mintership 3 polls (in their newest 100 poll votes): 1 Yes, 1 No, 1 other or unread.'
     );
     expect(words.pollVotesCounted(votes)).toEqual([
       "2 votes on encrypted admin board cards' polls (counted only).",
       "1 vote on other apps' polls (counted only).",
     ]);
     expect(words.pollVotesSummary({ ...votes, votes: [], truncated: false })).toBe(
-      "No votes in the original app's nomination or admin polls."
+      "No votes in Q-Mintership 3's nomination or admin polls."
     );
   });
 
   it('says what was checked before saying there is nothing', () => {
     expect(words.NOTHING_IN_MINTER).toBe('Not in MINTER. No nominations, records or votes found.');
     expect(words.nothingChecked(27, 27)).toMatch(
-      /all 27 original-app cards for ones about them\.$/
+      /all 27 Q-Mintership 3 cards for ones about them\.$/
     );
-    expect(words.nothingChecked(40, 421)).toMatch(/the newest 40 of 421 original-app cards/);
+    expect(words.nothingChecked(40, 421)).toMatch(/the newest 40 of 421 Q-Mintership 3 cards/);
     expect(words.alsoChecked(['supports', 'Considering marks'])).toBe(
       'Also checked, nothing found: supports, Considering marks.'
     );

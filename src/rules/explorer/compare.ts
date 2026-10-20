@@ -165,7 +165,7 @@ export interface CompareSide {
   links?: AccountLinks;
   /** Its newest 100 asset transfers and multi-payments (xassets). */
   assets?: AssetTransfers;
-  /** Its Q-Mintership+ records under any of its names (xmade). */
+  /** Its Q-Mintership records under any of its names (xmade). */
   made?: MadeBy;
   /** Trades it sold; null when it has no public key (it never sold one). */
   trades?: TradesOf | null;

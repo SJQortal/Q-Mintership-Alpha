@@ -116,7 +116,7 @@ describe('Settings → Notifications', () => {
       excludeBlocked: true,
       description: `~qmpre${nameMark('Avery Admin')}~`,
     });
-    expect(added[1].link).toBe('qortal://APP/Q-Mintership+/comments/{name}/{identifier}');
+    expect(added[1].link).toBe('qortal://APP/Q-Mintership/comments/{name}/{identifier}');
     expect(added[2].filters).toMatchObject({
       service: 'DOCUMENT_PRIVATE',
       identifier: 'qmp-macomment-',

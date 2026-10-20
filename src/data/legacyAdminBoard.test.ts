@@ -1,7 +1,7 @@
 /**
  * The original Admin Board, read for Minter Admins (legacyAdminBoard.ts):
  * its MAIL_PRIVATE cards and comments, decrypted through Hub's DECRYPT_DATA
- * as the original app read them, in the mock world (e2e/world-legacy.mjs).
+ * as Q-Mintership 3 read them, in the mock world (e2e/world-legacy.mjs).
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ADMIN_BOARD_IDS, answerDecrypt } from '../../e2e/world.mjs';
@@ -56,7 +56,7 @@ describe('the Admin Board index', () => {
 });
 
 describe('an Admin Board card', () => {
-  it('is fetched as base64 and decrypted by Hub, then read as the original app wrote it', async () => {
+  it('is fetched as base64 and decrypted by Hub, then read as Q-Mintership 3 wrote it', async () => {
     world();
     const read = await loadAdminCard(ADDR.admin, await cardRow(ADMIN_BOARD_IDS.removal));
     expect(read.status).toBe('ok');

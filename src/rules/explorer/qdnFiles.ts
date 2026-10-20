@@ -567,7 +567,7 @@ const RUNNABLE = new Set(['APP', 'WEBSITE']);
 /**
  * `qortal://APP/<name>` for an app or website published under its default
  * identifier, else null. The name goes in as written: Hub never decodes an
- * app's name in a link (docs/QORTAL.md → Deep links), so `Q-Mintership+`
+ * app's name in a link (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Deep links), so `Q-Mintership`
  * stays `+` and a space stays a space; a name holding `/`, `?` or `#` would
  * be read as more than a name, so it gets no link.
  */

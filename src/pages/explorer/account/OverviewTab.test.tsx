@@ -361,7 +361,7 @@ describe('Overview: its groups', () => {
       'aria-pressed',
       'true'
     );
-    expect(window.localStorage.getItem('qmintershipplus-groups-view')).toBe('list');
+    expect(window.localStorage.getItem('qmintership-groups-view')).toBe('list');
     expect(names()).toEqual(['MINTER', 'Q-Mintership Helpers', 'Qortal General']);
   });
 });
@@ -458,7 +458,7 @@ describe('Overview: its first reward share', () => {
 describe('Overview: Activity’s settings', () => {
   it('reads the number picked at first, and Read older reads as many more', async () => {
     const { user } = await open(FUNDER.address, () =>
-      window.localStorage.setItem('qmintershipplus-explorer-activity-first-read', '100')
+      window.localStorage.setItem('qmintership-explorer-activity-first-read', '100')
     );
     const activity = await region('Activity');
     expect(
@@ -469,7 +469,7 @@ describe('Overview: Activity’s settings', () => {
     await user.click(within(activity).getByRole('button', { name: 'Activity settings' }));
     const dialog = await screen.findByRole('dialog', { name: 'Activity settings' });
     await user.click(within(dialog).getByRole('radio', { name: '500' }));
-    expect(window.localStorage.getItem('qmintershipplus-explorer-activity-first-read')).toBe('500');
+    expect(window.localStorage.getItem('qmintership-explorer-activity-first-read')).toBe('500');
     await user.click(within(dialog).getByRole('button', { name: 'Done' }));
     expect(
       await within(activity).findByRole('button', { name: 'Read 500 older' }, T)

@@ -1,5 +1,5 @@
 /**
- * Connections' "In Q-Mintership": the social links Q-Mintership+ records
+ * Connections' "In Q-Mintership": the social links Q-Mintership records
  * show between one account and others, one row per other account. Records
  * only (nominations, supports, community votes), never a Minter Admin's
  * duties (approvals, invites, answers). Pure: the reads are passed in.

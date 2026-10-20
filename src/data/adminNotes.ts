@@ -1,5 +1,5 @@
 /**
- * Reading what is for the Minter Admins only (docs/apps/Q-Mintership+.md →
+ * Reading what is for the Minter Admins only (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md →
  * Reads): the notes proposers add to their decisions and nominations, and
  * the Minter Admins' comments. Only for a viewer who is a current Minter
  * Admin (nobody else can decrypt them, so the screens never call these for

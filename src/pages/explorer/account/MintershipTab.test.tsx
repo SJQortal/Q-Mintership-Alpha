@@ -4,7 +4,7 @@
  * stands, its rounds and timeline (people link into the Explorer), what it
  * published under any of its names, a Minter Admin's proposals, Activity's
  * figures (only when already read) and answers on request, what it posted in
- * the original app and its poll votes on request, and the one line for an
+ * Q-Mintership 3 and its poll votes on request, and the one line for an
  * account with nothing at all. Read-only throughout.
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -140,7 +140,7 @@ describe('the Mintership tab', () => {
     const proposer = within(timeline).getByRole('link', { name: 'Admin A: explore this account' });
     expect(proposer.getAttribute('href')).toMatch(/^\/explorer\/account\/Q\w{33}$/);
 
-    const made = await region('In Q-Mintership+, under any of their names');
+    const made = await region('In Q-Mintership, under any of their names');
     expect(await within(made).findByText('Nominations made · 5', {}, T)).toBeVisible();
     expect(readText(within(made).getByText(/^Found under 1 of their 2 names:/))).toBe(
       'Found under 1 of their 2 names: Nora Nominator.'
@@ -159,12 +159,12 @@ describe('the Mintership tab', () => {
     // Not a Minter Admin, no proposals: no admin section.
     expect(screen.queryByRole('region', { name: 'As a Minter Admin' })).toBeNull();
 
-    const original = await region('In the original app, under any of their names');
+    const original = await region('In Q-Mintership 3, under any of their names');
     expect(await within(original).findByText('Cards they posted · 9', {}, T)).toBeVisible();
     expect(
       await within(original).findByRole('link', { name: /bob\+builder for the MINTER group/ }, T)
     ).toHaveAttribute('href', '/history/card/Minter-board-card-bQ7xK2');
-    const about = await region('From the original app');
+    const about = await region('From Q-Mintership 3');
     expect(await within(about).findByText(/Looked through all 27 cards/, {}, T)).toBeVisible();
 
     await expectNoAxeViolations(container);
@@ -196,7 +196,7 @@ describe('the Mintership tab', () => {
         text: 'Hello',
       });
     });
-    const made = await region('In Q-Mintership+, under any of their names');
+    const made = await region('In Q-Mintership, under any of their names');
     expect(readText(await within(made).findByText(/^Found under 2 of their 2 names:/, {}, T))).toBe(
       'Found under 2 of their 2 names: Spare Room, Nora Nominator.'
     );
@@ -333,7 +333,7 @@ describe('the Mintership tab', () => {
     ).toBeVisible();
     expect(
       within(panel).getByText(
-        'Checked their MINTER history, nominations, Q-Mintership+ records and original-app posts under any of their names, and all 27 original-app cards for ones about them.'
+        'Checked their MINTER history, nominations, Q-Mintership records and Q-Mintership 3 posts under any of their names, and all 27 Q-Mintership 3 cards for ones about them.'
       )
     ).toBeVisible();
     expect(within(panel).queryByRole('region', { name: 'MINTER status' })).toBeNull();
@@ -342,7 +342,7 @@ describe('the Mintership tab', () => {
     noWrites(posts);
   });
 
-  it('reads original-app poll votes only when asked, listing the public boards’ ones', async () => {
+  it('reads Q-Mintership 3 poll votes only when asked, listing the public boards’ ones', async () => {
     const { posts, user } = await open(ADDR.nominator, (world) => {
       addPollVotes(world, ADDR.nominator);
       // This poll lists No first: the vote is read by the poll's own options.
@@ -354,7 +354,7 @@ describe('the Mintership tab', () => {
         pollOptions: [{ optionName: 'No' }, { optionName: 'Yes' }],
       });
     });
-    const original = await region('In the original app, under any of their names');
+    const original = await region('In Q-Mintership 3, under any of their names');
     const button = await within(original).findByRole(
       'button',
       { name: 'Show their poll votes' },
@@ -363,14 +363,14 @@ describe('the Mintership tab', () => {
     expect(queryLoadCounts().xpollvotes).toBeUndefined();
     await user.click(button);
     expect(
-      await within(original).findByText('2 votes in 2 original-app polls: 1 Yes, 1 No.', {}, T)
+      await within(original).findByText('2 votes in 2 Q-Mintership 3 polls: 1 Yes, 1 No.', {}, T)
     ).toBeVisible();
     expect(
       within(original).getByText("1 vote on encrypted admin board cards' polls (counted only).")
     ).toBeVisible();
     expect(within(original).getByText("1 vote on other apps' polls (counted only).")).toBeVisible();
     const list = within(original).getByRole('list', {
-      name: 'Their original-app poll votes, newest first',
+      name: 'Their Q-Mintership 3 poll votes, newest first',
     });
     expect(within(list).getByRole('link', { name: 'Voted No: open the card' })).toHaveAttribute(
       'href',
@@ -381,10 +381,10 @@ describe('the Mintership tab', () => {
 
   it('leaves out a post under a card identifier another name used first', async () => {
     await open(ADDR.left);
-    const original = await region('In the original app, under any of their names');
+    const original = await region('In Q-Mintership 3, under any of their names');
     expect(
       await within(original).findByText(
-        '1 post under a card’s identifier another name used first (the original app shows that first card).',
+        '1 post under a card’s identifier another name used first (Q-Mintership 3 shows that first card).',
         {},
         T
       )

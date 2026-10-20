@@ -3,7 +3,7 @@
  *
  * Bodies are keyed by name + identifier + latest signature, so a republish
  * is read again and an old copy is never shown under a new version
- * (docs/QORTAL.md → Hub & GO pitfalls 15). A body that isn't on the node yet
+ * (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Hub & GO pitfalls 15). A body that isn't on the node yet
  * is retried at 2, 4, 8 and 16 s, then reported as unavailable.
  */
 import { coreGet } from '../qortal/client';

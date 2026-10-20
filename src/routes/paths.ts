@@ -37,7 +37,7 @@ export function personPath(address: string): string {
   return explorerAccountPath(address, 'mintership');
 }
 
-/** `/history/card/<identifier>`: one card from the original app, read-only. */
+/** `/history/card/<identifier>`: one card from Q-Mintership 3, read-only. */
 export function legacyCardPath(identifier: string, section = ''): string {
   const base = `${PATHS.legacyCard}/${encodeURIComponent(identifier)}`;
   return section ? `${base}/${encodeURIComponent(section)}` : base;

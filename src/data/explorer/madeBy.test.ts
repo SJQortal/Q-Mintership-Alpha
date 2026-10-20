@@ -1,5 +1,5 @@
 /**
- * What an account made in Q-Mintership+ (madeBy.ts): each prefix parsed from
+ * What an account made in Q-Mintership (madeBy.ts): each prefix parsed from
  * identifiers alone, rows kept only under the account's exact names, the
  * names searched 40 at a time with the service always set, ceilings said,
  * and the encrypted Minter Admin records counted and nothing more.

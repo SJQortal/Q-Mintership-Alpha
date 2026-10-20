@@ -1,6 +1,6 @@
 /**
  * A Qortal name's avatar (its `qortal_avatar` thumbnail), loaded only once
- * it scrolls into view (MUI's Avatar would load on mount; docs/QORTAL.md
+ * it scrolls into view (MUI's Avatar would load on mount; https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md
  * pitfall 5). The first letter shows until the image has loaded, and stays
  * for names without one; an avatar Core is still fetching comes in when it
  * can (data/avatars.ts). Accounts without a name get a neutral circle.

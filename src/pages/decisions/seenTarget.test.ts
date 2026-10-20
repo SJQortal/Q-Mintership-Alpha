@@ -3,7 +3,7 @@ import { readSeenTarget, seenTargetKey, targetMoved, writeSeenTarget } from './s
 
 describe('the target this device saw last', () => {
   it('is kept per group under the app’s prefix', () => {
-    expect(seenTargetKey(694)).toBe('qmintershipplus-seen-target-694');
+    expect(seenTargetKey(694)).toBe('qmintership-seen-target-694');
     writeSeenTarget({ adminCount: 20, needed: 8, height: 100 }, 694);
     expect(readSeenTarget(694)).toEqual({ adminCount: 20, needed: 8, height: 100 });
     expect(readSeenTarget(42)).toBeNull();

@@ -1,5 +1,5 @@
 /**
- * The original Q-Mintership's data in the mock world (read-only History):
+ * Q-Mintership 3's data in the mock world (read-only History):
  * nomination cards (BLOG_POST Minter-board-card-*), Minter Admin proposals
  * (QM-AR-card-*), their comments and chain polls, and the encrypted Admin
  * Board (MAIL_PRIVATE card-MAC-* and comment-card-MAC-*, sealed with the
@@ -196,7 +196,7 @@ export function extendLegacy(world) {
     });
     if (i % 2 === 0) poll(id, by, 8 + (i % 4), i % 3);
   }
-  // A poll created by someone other than the card's publisher (the original app hid that card).
+  // A poll created by someone other than the card's publisher (Q-Mintership 3 hid that card).
   polls['Minter-board-card-old002-poll'].owner = addressOf('Admin A');
 
   // 6. The encrypted Admin Board. Readers are addresses, sealed when served; a body

@@ -1,5 +1,5 @@
 /**
- * One small store for every read (docs/QORTAL.md → Efficiency rules):
+ * One small store for every read (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Efficiency rules):
  *
  * - identical reads already in flight share one promise;
  * - results are kept for the session and reused until their TTL passes,

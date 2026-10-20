@@ -162,8 +162,8 @@ describe('saving and opening', () => {
 
   it('links an app or a website published under its default identifier', () => {
     // Hub never decodes an app's name in a link: written as it is.
-    expect(qortalLinkFor({ service: 'APP', name: 'Q-Mintership+', identifier: null })).toBe(
-      'qortal://APP/Q-Mintership+'
+    expect(qortalLinkFor({ service: 'APP', name: 'Q-Mintership', identifier: null })).toBe(
+      'qortal://APP/Q-Mintership'
     );
     expect(qortalLinkFor({ service: 'WEBSITE', name: 'Q Maps', identifier: null })).toBe(
       'qortal://WEBSITE/Q Maps'

@@ -1,11 +1,11 @@
 /**
- * "Q-Mintership Classic" (Hub 2.0): the palette of the original app, lifted
+ * "Q-Mintership Classic" (Hub 2.0): the palette of Q-Mintership 3, lifted
  * from legacy/assets/css/forum-styles.css (`:root { --qm-* }`). The original
  * is dark only; the light variant keeps its teal and gold accents on pale
  * surfaces so the theme still follows Hub's light mode.
  *
  * Every accent reads at 4.5:1 or more as text on every surface of its mode
- * (docs/DESIGN.md), and fills take white or black text only at 4.5:1
+ * (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md), and fills take white or black text only at 4.5:1
  * (`contrastThreshold`). The light accents are deeper shades of the
  * original's teal, gold, green and red for that reason: #1f8f82 read at 3:1
  * on the light surfaces and under white button text.

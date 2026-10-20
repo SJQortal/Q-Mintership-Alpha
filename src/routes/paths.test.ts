@@ -23,7 +23,7 @@ describe('a Minter Admin poll’s path', () => {
   it('is /decisions/polls/<id>, copied as a qortal:// link with a literal +', () => {
     expect(adminPollPath('lvl5adm1')).toBe('/decisions/polls/lvl5adm1');
     expect(appLink(adminPollPath('lvl5adm1'))).toBe(
-      'qortal://APP/Q-Mintership+/decisions/polls/lvl5adm1'
+      'qortal://APP/Q-Mintership/decisions/polls/lvl5adm1'
     );
   });
 });
@@ -40,10 +40,10 @@ describe('shareable paths', () => {
     expect(nominationPath(ADDRESS)).toBe(`/nominations/${ADDRESS}`);
   });
 
-  it('copies them as qortal://APP/Q-Mintership+/… links, with a literal +', () => {
-    expect(appLink(decisionPath(SIG))).toBe(`qortal://APP/Q-Mintership+/decisions/${SIG}`);
+  it('copies them as qortal://APP/Q-Mintership/… links, with a literal +', () => {
+    expect(appLink(decisionPath(SIG))).toBe(`qortal://APP/Q-Mintership/decisions/${SIG}`);
     expect(appLink(nominationPath(ADDRESS))).toBe(
-      `qortal://APP/Q-Mintership+/nominations/${ADDRESS}`
+      `qortal://APP/Q-Mintership/nominations/${ADDRESS}`
     );
   });
 
@@ -72,7 +72,7 @@ describe('Hub learns the path on screen', () => {
       expect.objectContaining({
         action: 'QDN_RESOURCE_DISPLAYED',
         service: 'APP',
-        name: 'Q-Mintership+',
+        name: 'Q-Mintership',
         path: `/decisions/${SIG}`,
       }),
       '*'
@@ -91,7 +91,7 @@ describe('Hub learns the path on screen', () => {
     expect(postMessage).toHaveBeenCalledWith(
       expect.objectContaining({
         action: 'QDN_RESOURCE_DISPLAYED',
-        name: 'Q-Mintership+',
+        name: 'Q-Mintership',
         path: '/decisions/polls/lvl5adm1',
       }),
       '*'
@@ -118,7 +118,7 @@ describe('the Explorer’s paths', () => {
 
   it('copies an account’s page as a qortal:// link with a literal +', () => {
     expect(appLink(explorerAccountPath(ADDRESS, 'connections'))).toBe(
-      `qortal://APP/Q-Mintership+/explorer/account/${ADDRESS}/connections`
+      `qortal://APP/Q-Mintership/explorer/account/${ADDRESS}/connections`
     );
   });
 

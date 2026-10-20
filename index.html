@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      /* Q-Apps+ theme boot (shared/hub-theme/boot-inline.js): paints the
+      /* Q-Apps+ theme boot (shared/hub-theme/boot-inline.js in SJQortal/Q-Apps-Plus): paints the
          saved theme's background before React loads. STORAGE_KEY and HUB20
          match src/theme/qplus-theme.ts. */
       (function () {
@@ -46,7 +46,7 @@
     </script>
     <script>
       /* Hub serves the app under /render/APP/<its name>/…; a <base> keeps
-         relative asset URLs and client routes working there (docs/QORTAL.md). */
+         relative asset URLs and client routes working there (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md). */
       (function () {
         var match = location.pathname.match(/^\/render\/(?:APP|WEBSITE)\/[^/]+/i);
         var base = (window._qdnBase || (match && match[0]) || '').replace(/\/$/, '');

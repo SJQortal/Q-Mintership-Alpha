@@ -1,5 +1,5 @@
 /**
- * A person's cards from the original app. Old cards only say who they are
+ * A person's cards from Q-Mintership 3. Old cards only say who they are
  * about inside their body, so this reads the newest cards (plus any the
  * person posted themselves) and offers to look further back, 100 at a time.
  * The first look starts only once the section scrolls near the screen.

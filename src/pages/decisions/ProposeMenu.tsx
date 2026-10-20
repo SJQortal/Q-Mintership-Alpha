@@ -1,10 +1,10 @@
 /**
  * The Minter Admins' "Propose" button: a menu on wider layouts and a bottom
- * sheet on phones (docs/DESIGN.md → Mobile: menus open as sheets), where it
+ * sheet on phones (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile: menus open as sheets), where it
  * is the page's floating button (`fab`). Propose nomination comes first
  * (Simon, 2026-10-17: "propose nomination will be the first option at the
  * top of + Propose"). The sheet is a plain Drawer, mounted only while open
- * (docs/QORTAL.md pitfall 4).
+ * (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md pitfall 4).
  */
 import { useState, type ReactNode, type Ref } from 'react';
 import {

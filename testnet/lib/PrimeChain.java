@@ -1,4 +1,4 @@
-// Q-Mintership+ private testnet (dev-only).
+// Q-Mintership private testnet (dev-only).
 //
 // Creates a fresh testnet's database and its genesis block offline, with
 // Core's own classes, before the node's first start:

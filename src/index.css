@@ -9,7 +9,7 @@
 }
 
 /* `clip`, not `hidden`: `hidden` makes body a scroll container and sticky
-   headers then scroll away (docs/QORTAL.md, Hub & GO pitfall 2). */
+   headers then scroll away (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md, Hub & GO pitfall 2). */
 html,
 body {
   overflow-x: clip;
@@ -104,7 +104,7 @@ html[data-motion='reduce'] {
   scale: var(--qmp-press-icon);
 }
 
-/* Motion's timing, set once (docs/DESIGN.md → Motion: 150–200 ms): what
+/* Motion's timing, set once (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Motion: 150–200 ms): what
    appears, a chevron that turns, the navigation's highlight. Opacity alone
    eases out; what moves, grows or turns starts quickly and settles. */
 :root {
@@ -113,7 +113,7 @@ html[data-motion='reduce'] {
   --qmp-ease-enter: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Content arriving (docs/DESIGN.md → Motion). An animation runs when its
+/* Content arriving (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Motion). An animation runs when its
    element is inserted, never when React re-renders it, so a refresh that
    keeps what is on screen stays still and only what is new moves: a page as
    it opens, data in place of its skeleton, a list's first rows. Opacity,

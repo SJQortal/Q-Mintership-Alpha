@@ -92,7 +92,7 @@ describe('legacyHashToPath', () => {
 describe('legacyPathToPath', () => {
   it('maps the old nav hrefs', () => {
     expect(legacyPathToPath('/MINTERS')).toBe('/decisions?show=nominations');
-    expect(legacyPathToPath('/render/APP/Q-Mintership+/MINTERSHIP-FORUM')).toBe('/');
+    expect(legacyPathToPath('/render/APP/Q-Mintership/MINTERSHIP-FORUM')).toBe('/');
     expect(legacyPathToPath('/ADDREMOVEADMIN')).toBe('/decisions');
     expect(legacyPathToPath('/tools')).toBe('/decisions');
     expect(legacyPathToPath('/STATS')).toBe('/explorer/activity');
@@ -107,6 +107,6 @@ describe('legacyPathToPath', () => {
     expect(legacyPathToPath('/people/Mintership-Forum')).toBeNull();
     expect(legacyPathToPath('/explorer/account/Tools')).toBeNull();
     expect(legacyPathToPath('/explorer/account/stats/activity')).toBeNull();
-    expect(legacyPathToPath('/render/APP/Q-Mintership+/people/Tools')).toBeNull();
+    expect(legacyPathToPath('/render/APP/Q-Mintership/people/Tools')).toBeNull();
   });
 });

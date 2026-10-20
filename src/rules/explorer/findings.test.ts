@@ -17,7 +17,7 @@ const B = addr('b');
 const C = addr('c');
 const SIG =
   '4Kw5V2Zmh7mfV6KjPuX2ZXCK3HE2fsR6w5CWD75CdMa8Rfat1mXcf5rCiLpm8tm96FMPhCUBpMUaLpvUmitbqJ';
-const LINK = `qortal://APP/Q-Mintership+/explorer/account/${ME}/connections`;
+const LINK = `qortal://APP/Q-Mintership/explorer/account/${ME}/connections`;
 const NAMES: Record<string, string> = { [ME]: 'Nora Nominator', [B]: 'Bob' };
 
 /** Words that would read as a verdict about who runs an account. */

@@ -1,6 +1,6 @@
 /**
- * The original app's encrypted Admin Board, read for Minter Admins in
- * History (docs/apps/Q-Mintership+.md → Data contract → Legacy reads):
+ * Q-Mintership 3's encrypted Admin Board, read for Minter Admins in
+ * History (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract → Legacy reads):
  *
  * - cards: MAIL_PRIVATE `card-MAC-<…>` with `{ minterName, header, content,
  *   links, creator, timestamp, poll, topicMode }`, published with Hub's

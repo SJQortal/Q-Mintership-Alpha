@@ -1,5 +1,5 @@
 /**
- * Copies a `qortal://APP/Q-Mintership+/…` link to one page (utils/links.ts
+ * Copies a `qortal://APP/Q-Mintership/…` link to one page (utils/links.ts
  * appLink: the `+` stays literal). An icon button for page headers, or a
  * "Copy link" text button for cards (every decision and nomination card).
  * The result is spoken once: "Link copied", or "Couldn't copy the link"

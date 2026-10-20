@@ -2,7 +2,7 @@
  * Nominations: who may nominate, who may be nominated, and where a
  * nomination stands. Pure; data/nominations.ts feeds it.
  *
- * Process (docs/apps/Q-Mintership+.md → The new process):
+ * Process (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → The new process):
  * 1. A MINTER member at level 5+, or any Minter Admin, publishes a
  *    nomination record. Further eligible members add support.
  * 2. The nominee accepts by sending JOIN_GROUP (a join request), so approval

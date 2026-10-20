@@ -144,7 +144,7 @@ export function answersLeftOut(read: AnswersRead): string[] {
 }
 
 /**
- * "36 votes in 34 original-app polls: 30 Yes, 6 No." with what the read
+ * "36 votes in 34 Q-Mintership 3 polls: 30 Yes, 6 No." with what the read
  * covers (a vote can be cast again in the same poll).
  */
 export function pollVotesSummary(votes: PollVotes): string {

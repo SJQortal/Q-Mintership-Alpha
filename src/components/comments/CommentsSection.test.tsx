@@ -548,7 +548,7 @@ describe('CommentsSection', () => {
   it('outside Hub: still reads the comments, and says where to write one', async () => {
     await show('outside', { open: true });
     const panel = await region();
-    expect(within(panel).getByText('Open Q-Mintership+ in Qortal Hub to comment.')).toBeVisible();
+    expect(within(panel).getByText('Open Q-Mintership in Qortal Hub to comment.')).toBeVisible();
     expect(
       await within(panel).findByText(/Wren helped me set up my node/, { selector: 'p' })
     ).toBeVisible();

@@ -78,8 +78,8 @@ describe('currentQortalAppName', () => {
     expect(currentQortalAppName()).toBe('Q-Mintership+');
   });
 
-  it('defaults to the + app name outside Hub', () => {
-    expect(currentQortalAppName()).toBe('Q-Mintership+');
+  it('defaults to the app name outside Hub', () => {
+    expect(currentQortalAppName()).toBe('Q-Mintership');
   });
 });
 
@@ -93,11 +93,11 @@ describe('normalizeHubPath and buildAppLink', () => {
     expect(normalizeHubPath('minters/')).toBe('/minters');
   });
 
-  it('builds a qortal:// link with a literal + in the app name (Hub never decodes it)', () => {
+  it("builds a qortal:// link with the app's link name", () => {
     expect(buildAppLink('/history/card/Minter-board-card-1')).toBe(
-      'qortal://APP/Q-Mintership+/history/card/Minter-board-card-1'
+      'qortal://APP/Q-Mintership/history/card/Minter-board-card-1'
     );
-    expect(buildAppLink('/')).toBe('qortal://APP/Q-Mintership+');
+    expect(buildAppLink('/')).toBe('qortal://APP/Q-Mintership');
   });
 });
 

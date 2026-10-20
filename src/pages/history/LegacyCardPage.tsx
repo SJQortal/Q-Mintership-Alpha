@@ -1,5 +1,5 @@
 /**
- * One card from the original Q-Mintership, read-only: what it said, who it
+ * One card from Q-Mintership 3, read-only: what it said, who it
  * was about and who posted it, its poll result and its comments. Old deep
  * links (#/minter/<card>/<section>) land here; "comments" scrolls to them.
  * Cards from the encrypted Admin Board are decrypted for Minter Admins

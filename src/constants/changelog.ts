@@ -18,26 +18,11 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
-    version: '1.0.1',
+    version: '4.0.0',
     date: '2026-10-20',
-    title: 'The original Admin Board, readable again',
+    title: 'Q-Mintership 4.0: nominate, then approve',
     summary:
-      'Minter Admins can read the cards and comments of the original encrypted Admin Board in History.',
-    sections: [
-      {
-        title: 'For Minter Admins',
-        notes: [
-          'History has an Admin Board filter: the cards the Minter Admins posted on the original encrypted Admin Board, with what each said, who it was about, its poll result and its comments, decrypted for you as you read them. Each says it was proposed in the original Q-Mintership.',
-        ],
-      },
-    ],
-  },
-  {
-    version: '1.0.0',
-    date: '2026-10-12',
-    title: 'Q-Mintership+ 2.0: nominate, then approve',
-    summary:
-      'A new, simpler way into MINTER: level 5+ minters and Minter Admins nominate, Minter Admins approve, reject or let it expire.',
+      'A new, simpler way into MINTER: level 5+ minters and Minter Admins nominate, Minter Admins approve, reject or let it expire. First published as Q-Mintership+ (on QDN from 14 October 2026, 1.0.0 on 20 October), where the Minter Admins used it.',
     sections: [
       {
         title: 'For everyone',
@@ -66,7 +51,7 @@ export const CHANGELOG: Release[] = [
           'A nomination’s reason shows in full, in a frame of its own with its links (on a phone a long one opens with Show the whole reason), and each comment sits in its own frame.',
           'Not a Minter Admin? Vote Yes or No on an open nomination, so the admins can weigh the community’s view. Who voted shows beside Copy link on its card, and on their comments. Advisory: the Minter Admins decide on chain.',
           'Explorer: look up any account, name or transaction, with name suggestions as you type. An account shows its level, every name it owns (not only its primary one), its groups, whether it mints now, and its transactions in plain words.',
-          'Explorer’s Mintership tab tells an account’s MINTER story: its status and rounds, what it published in Q-Mintership+ under any of its names, a Minter Admin’s proposals and answers, and its posts in the original app.',
+          'Explorer’s Mintership tab tells an account’s MINTER story: its status and rounds, what it published in Q-Mintership under any of its names, a Minter Admin’s proposals and answers, and its posts in Q-Mintership 3.',
           'Transactions on Qortal: the latest transactions of every type but messages (or one type you pick) over the last 1,000 or 10,000 blocks, or from a block.',
           'In the Explorer every name, primary or secondary, and every group shows its own avatar, and an account’s page shows its whole address (the person page too).',
           'Explorer’s Transactions filters by type, by one of the account’s names (primary or secondary), by time (the last day, week, month or year, between two dates or between two blocks) and sorts newest, oldest or biggest amount first. What you pick stays in the link.',
@@ -85,7 +70,7 @@ export const CHANGELOG: Release[] = [
           'A transaction’s page says where it belongs and opens it there: a Q-Tube video, comment or like, a Torq post, reply or like, a share in Q-Share, a crowdfund in Q-Fund, an issue in Q-Support, a store in Q-Shop, a blog post, a song, a website or a Q-App. A comment or a like that only holds a hash of what it is about is looked for when you ask.',
           'Copy the link in the Explorer copies the page as it is, with its tab and filters.',
           'When a minting level moved from another account, Node online counts the time on both accounts, and the Minter Profile shows where the level came from and when it moved.',
-          'Nominees proposed on chain, as the original Q-Mintership does, show by name in the Explorer.',
+          'Nominees proposed on chain, as Q-Mintership 3 did, show by name in the Explorer.',
         ],
       },
       {
@@ -116,6 +101,7 @@ export const CHANGELOG: Release[] = [
           'Cancel an approved invite lists every invite nobody used, with who invited and when it was approved, and cancels the older ones in one go, with your approval on each.',
           'Hide a comment for everyone; any Minter Admin can show it again.',
           'A decision’s and a nomination’s page open the person in the Explorer.',
+          'History has an Admin Board filter: the cards the Minter Admins posted on Q-Mintership 3’s encrypted Admin Board, proposed before Q-Mintership 4.0.0, with what each said, who it was about, its poll result and its comments, decrypted for you as you read them.',
         ],
       },
       {

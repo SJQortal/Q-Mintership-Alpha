@@ -1,6 +1,6 @@
 /**
  * Connections' "In Q-Mintership": nominations, supports and community votes
- * between this account and others (social links from Q-Mintership+ records,
+ * between this account and others (social links from Q-Mintership records,
  * never a Minter Admin's duties: approvals, invites and answers are process
  * facts on the Mintership tab). One row per other account, its name linking
  * into the Explorer, with a Compare button beside it. Nothing at all when

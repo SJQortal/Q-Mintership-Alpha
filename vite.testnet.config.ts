@@ -1,5 +1,5 @@
 /**
- * Dev-only: the app against the private testnet (docs/apps/Q-Mintership+.md →
+ * Dev-only: the app against the private testnet (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md →
  * Testnet). `npm run dev:testnet`, then open e.g.
  * http://127.0.0.1:5176/?as=admin01&group=main.
  *

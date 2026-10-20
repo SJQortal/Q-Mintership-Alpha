@@ -1,5 +1,5 @@
 /**
- * What an account made in Q-Mintership+, under any of its names: the + app's
+ * What an account made in Q-Mintership, under any of its names: this app's
  * records (service JSON) whose publisher is one of the names it owns, read
  * by prefix, and the encrypted Minter Admin poll records (DOCUMENT_PRIVATE),
  * which are only counted. Key `xmade:<address>`.
@@ -262,7 +262,7 @@ async function searchKind(kind: MadeKind | 'admin', names: readonly string[]): P
   return { kind, rows, truncated };
 }
 
-/** Everything the account made in Q-Mintership+, under any of its names. Key `xmade:<address>`. */
+/** Everything the account made in Q-Mintership, under any of its names. Key `xmade:<address>`. */
 export function loadMadeBy(address: string, options: { force?: boolean } = {}): Promise<MadeBy> {
   return fetchQuery(
     `xmade:${address}`,

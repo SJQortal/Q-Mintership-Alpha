@@ -1,5 +1,5 @@
 /**
- * A page's main action on a phone (docs/DESIGN.md → Mobile: a floating main
+ * A page's main action on a phone (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Mobile: a floating main
  * action, never in landscape): a round button 16 px above the bottom bar,
  * its icon only, named for screen readers and shown as a tooltip. Pages
  * leave it out while the keyboard is open or the frame is short, and keep

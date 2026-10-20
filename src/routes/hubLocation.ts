@@ -43,7 +43,7 @@ function appPrefix(pathname: string, qdnBase: string): string | null {
   if (pathname.toLowerCase().startsWith(qdnBase.toLowerCase()) && (!next || next === '/')) {
     return pathname.slice(0, qdnBase.length);
   }
-  // "/render/APP/Q-Mintership+" has 4 parts once split on "/"; take as many from the path.
+  // "/render/APP/Q-Mintership" has 4 parts once split on "/"; take as many from the path.
   const prefix = pathname.split('/').slice(0, qdnBase.split('/').length).join('/');
   return decodedLower(prefix) === decodedLower(qdnBase) ? prefix : null;
 }
@@ -51,7 +51,7 @@ function appPrefix(pathname: string, qdnBase: string): string | null {
 /**
  * The router's basename for `pathname`: `qdnBase` when the path starts with
  * it; the path's own leading segments when they spell the same app
- * differently (Core injects `_qdnBase` decoded, "/render/APP/Q-Mintership+",
+ * differently (Core injects `_qdnBase` decoded, "/render/APP/Q-Mintership",
  * but Hub loads the frame with the name as the qortal:// link spelled it,
  * e.g. "Q-Mintership%2B"); "" when there is no base.
  */
@@ -161,8 +161,8 @@ export function appSearch(search: string): string {
 }
 
 /**
- * A `qortal://APP/Q-Mintership+/<path>` link for sharing. Hub never decodes
- * the app name, so its `+` stays literal (docs/QORTAL.md → Deep links).
+ * A `qortal://APP/Q-Mintership/<path>` link for sharing. Hub never decodes
+ * the app name, so its `+` stays literal (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Deep links).
  */
 export function buildAppLink(path: string): string {
   const normalized = normalizeHubPath(path);

@@ -1,6 +1,6 @@
 /**
  * What each Hub confirmation will show, in plain words, so the app can
- * explain it before it opens (docs/DESIGN.md → Dialogs). Taken from Hub's
+ * explain it before it opens (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/DESIGN.md → Dialogs). Taken from Hub's
  * own texts (get.ts getUserPermission calls, 2026-10-12).
  */
 export interface HubDialogText {

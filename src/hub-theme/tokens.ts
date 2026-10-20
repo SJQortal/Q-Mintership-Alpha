@@ -5,7 +5,7 @@
  *
  * This file has no dependencies so React/MUI apps, plain-JS apps, and the
  * CSS generator (build-css.mjs) all read the same numbers. Edit it here, then
- * run `scripts/sync-theme.sh` to copy the kit into the apps.
+ * run `https://github.com/SJQortal/Q-Apps-Plus/blob/main/scripts/sync-theme.sh` to copy the kit into the apps.
  */
 
 export type UiThemeId = 'hub30' | 'hub20' | 'black' | 'white';

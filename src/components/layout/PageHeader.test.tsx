@@ -57,10 +57,10 @@ describe('PageHeader on a route change', () => {
     const home = screen.getByRole('heading', { level: 1, name: 'Home' });
     // The first page keeps the browser's focus.
     expect(home).not.toHaveFocus();
-    expect(document.title).toBe('Home · Q-Mintership+');
+    expect(document.title).toBe('Home · Q-Mintership');
     await userEvent.setup().click(screen.getByRole('link', { name: 'History' }));
     expect(screen.getByRole('heading', { level: 1, name: 'History' })).toHaveFocus();
-    expect(document.title).toBe('History · Q-Mintership+');
+    expect(document.title).toBe('History · Q-Mintership');
   });
 
   it('gives a decision’s own page the focus on its title, like any page', async () => {

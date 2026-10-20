@@ -1,5 +1,5 @@
 /**
- * Hub's frame, not the device screen (docs/QORTAL.md → Hub & GO pitfalls 3).
+ * Hub's frame, not the device screen (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/QORTAL.md → Hub & GO pitfalls 3).
  *
  * Hub and GO host the app in an iframe shorter than the screen: at 844×390
  * (a phone held sideways) Q-Mail+ got a frame of 703×201 CSS px in Hub.

@@ -1,8 +1,8 @@
 /**
- * The new QDN records (docs/apps/Q-Mintership+.md → Data contract):
+ * The new QDN records (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract):
  * nomination, support, and a Minter Admin's Considering (further down).
- * They are additive: the original app never reads or writes these
- * identifiers, and the + app reads the original's cards only for History.
+ * They are additive: Q-Mintership 3 never reads or writes these
+ * identifiers, and this app reads Q-Mintership 3's cards only for History.
  *
  * Nomination  service JSON, identifier `qmp-nomination-<nomineeAddress>`,
  *             published by the nominator under their name.

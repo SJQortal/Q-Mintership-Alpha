@@ -1,5 +1,5 @@
 /**
- * Minter Admin polls (docs/apps/Q-Mintership+.md → Data contract): a question
+ * Minter Admin polls (https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md → Data contract): a question
  * for the Minter Admins, their votes and comments, and copies an admin shares
  * with Minter Admins added since. Advisory only: nothing on chain follows
  * from a result. The data is additive, with its own prefixes; the original

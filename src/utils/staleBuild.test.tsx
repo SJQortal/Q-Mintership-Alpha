@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { isStaleBuildError, reloadForNewBuild } from './staleBuild';
 
-const KEY = 'qmintershipplus-stale-build-reload';
+const KEY = 'qmintership-stale-build-reload';
 const realLocation = window.location;
 let reload: ReturnType<typeof vi.fn>;
 
@@ -53,7 +53,7 @@ describe('a screen from an older build', () => {
       </ErrorBoundary>
     );
     expect(screen.getByRole('status')).toHaveTextContent(
-      'Q-Mintership+ was updated. Loading the new version…'
+      'Q-Mintership was updated. Loading the new version…'
     );
     expect(reload).toHaveBeenCalledTimes(1);
   });
@@ -66,7 +66,7 @@ describe('a screen from an older build', () => {
         <Throws error={chunkError()} />
       </ErrorBoundary>
     );
-    expect(screen.getByText('This part of Q-Mintership+ could not be shown.')).toBeVisible();
+    expect(screen.getByText('This part of Q-Mintership could not be shown.')).toBeVisible();
     expect(reload).not.toHaveBeenCalled();
     unmount();
     render(
@@ -74,7 +74,7 @@ describe('a screen from an older build', () => {
         <Throws error={new Error('boom')} />
       </ErrorBoundary>
     );
-    expect(screen.getByText('This part of Q-Mintership+ could not be shown.')).toBeVisible();
+    expect(screen.getByText('This part of Q-Mintership could not be shown.')).toBeVisible();
     expect(reload).not.toHaveBeenCalled();
   });
 });

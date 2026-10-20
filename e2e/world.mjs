@@ -2,7 +2,7 @@
  * A mock MINTER group for tests and the screenshot check: one consistent
  * world with a person in every status and a decision in every state. Every
  * address and name here is made up. Plain JS so both vitest (src/test/world.ts)
- * and scripts/screens.mjs (e2e/screens.config.mjs) can use it.
+ * and e2e/screens.mjs (e2e/screens.config.mjs) can use it.
  *
  * answerCore(world, pathname, searchParams) answers the Core GETs the app
  * makes; answerQortal(world, persona, request) answers qortalRequest. Writes
@@ -1218,7 +1218,7 @@ export function addDecidedSignatures(world) {
   });
   return invite.signature;
 }
-// ---- comments (Q-Mintership+ 2.0: public comments and Minter Admin hides) ----
+// ---- comments (Q-Mintership 4.0: public comments and Minter Admin hides) ----
 /**
  * Add public comments and hide records (JSON `qmp-comment-<key>-<id>` and
  * `qmp-hide-<key>-<id>`) to `world.records`:
@@ -1346,7 +1346,7 @@ function fnv1a64(text) {
 
 /** A reply's QDN description: the marker of whose comment it answers, then words. */
 export function replyDescriptionOf(name) {
-  return `~qmpre${fnv1a64(name.trim().toLowerCase())}~ A reply in Q-Mintership+`;
+  return `~qmpre${fnv1a64(name.trim().toLowerCase())}~ A reply in Q-Mintership`;
 }
 // ---- answers-wording (night 2): former members ready to mint, name search ----
 
@@ -1446,7 +1446,7 @@ export const LAST_VISIT_AT = blockTime(LAST_VISIT_HEIGHT);
 
 /** Where the app keeps an account's last visit (src/data/lastVisit.ts). */
 export function lastVisitStorageKey(address, groupId = GROUP) {
-  return `qmintershipplus-last-visit-${address}-${groupId}`;
+  return `qmintership-last-visit-${address}-${groupId}`;
 }
 
 const SNAP_KIND = {
@@ -1959,7 +1959,7 @@ export function addAdminPolls(world) {
     'g7h8i9',
     extra(1),
     t1 + DAY + 7_200_000,
-    'Advisory only: let’s see where everyone stands first. qortal://APP/Q-Mintership+/decisions',
+    'Advisory only: let’s see where everyone stands first. qortal://APP/Q-Mintership/decisions',
     before
   );
 

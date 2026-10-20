@@ -1,5 +1,5 @@
 /**
- * History → From the original app: Q-Mintership's nomination cards and
+ * History → From Q-Mintership 3: Q-Mintership's nomination cards and
  * Minter Admin proposals, newest first, 20 at a time; for Minter Admins also
  * its encrypted Admin Board, decrypted for them row by row
  * (data/legacyAdminBoard.ts). The list of cards is a few cheap searches;

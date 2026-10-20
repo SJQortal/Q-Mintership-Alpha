@@ -18,7 +18,7 @@ describe('where a QDN publish belongs (Simon, 2026-10-19)', () => {
       what: 'A website',
       link: 'qortal://WEBSITE/Qortal Wiki',
     });
-    expect(qdnPlace('APP', 'Q-Mintership+', null)?.link).toBe('qortal://APP/Q-Mintership+');
+    expect(qdnPlace('APP', 'Q-Mintership', null)?.link).toBe('qortal://APP/Q-Mintership');
     expect(qdnPlace('WEBSITE', 'a/b', null)).toBeNull();
     expect(qdnPlace('IMAGE', 'Ada', null)).toBeNull();
   });

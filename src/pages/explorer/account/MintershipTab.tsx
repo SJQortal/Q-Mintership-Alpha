@@ -2,8 +2,8 @@
  * The Minter Profile tab (Simon, 2026-10-17: "add the Minter Profile into
  * the Explorer tabs as well so it has a place where it exists", then the
  * profile page "merged into … Minter Profile in Explorer"): an account's
- * MINTER profile, its one place, and what it did in Q-Mintership+ and in
- * the original app. `/people/<address>` links open it.
+ * MINTER profile, its one place, and what it did in Q-Mintership and in
+ * Q-Mintership 3. `/people/<address>` links open it.
  *
  * - "MINTER status": where it stands and its facts, then what the viewer
  *   can do for it: the profile's actions (pages/person/ProfileActions.tsx,
@@ -13,11 +13,11 @@
  * - "Nomination" (or "Latest nomination"): the card in full, with comments,
  *   votes and the nominee's own next step, then its rounds in brief.
  * - "MINTER timeline": what happened to it, people linking into the Explorer.
- * - "In Q-Mintership+, under any of their names": the records it published
+ * - "In Q-Mintership, under any of their names": the records it published
  *   (data/explorer/madeBy.ts), read as the section nears the screen.
  * - "As a Minter Admin": proposals, Activity's figures when already read,
  *   and its answers on request.
- * - "From the original app" (cards about it) and "In the original app,
+ * - "From Q-Mintership 3" (cards about it) and "In Q-Mintership 3,
  *   under any of their names" (what it posted, poll votes on request).
  *
  * An account with nothing in any of these gets one line instead. Every read
@@ -93,7 +93,7 @@ function Timeline({ story, self }: { story: MinterStory; self: boolean }) {
 
 /**
  * Nothing in MINTER and no nomination: whether they made or posted anything
- * (and whether the newest original-app cards are about them) decides
+ * (and whether the newest Q-Mintership 3 cards are about them) decides
  * between the one line and the full tab. Read at once, since the tab is short.
  */
 function useNothingAnywhere(address: string, quiet: boolean, name: string | null) {
