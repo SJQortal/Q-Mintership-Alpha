@@ -22,7 +22,7 @@ The other MINTER changes (remove a member, ban, lift a ban, make or remove a Min
 - **Decisions:** one place for nominations, removals, bans and admin changes, by type or most urgent first, with `k of n`, a live countdown, who approved, rejected or is considering, and what an admin change would do to every waiting decision before it is signed.
 - **Talk:** public comments on every decision and nomination, advisory Yes/No votes from the community, and Minter Admin polls, notes and comments encrypted to the Minter Admins. Hub alerts (opt-in) for nominations, support and replies.
 - **History:** every MINTER change on chain, filtered by type and period, plus Q-Mintership 3's boards, read-only. Minter Admins also read its encrypted Admin Board there, each card decrypted for them and marked as proposed before 4.0.0.
-- **Explorer:** look up any account, name or transaction (read-only): an account's overview, transactions in plain words, Minter Profile and names. Minter Admins, Dev Admins and level 5+ members also see connections between accounts, Compare and QORT summaries.
+- **Explorer:** look up any account, name or transaction (read-only): an account's overview, transactions in plain words, Minter Profile and names. Minter Admins, Dev Admins and level 5+ members also see connections between accounts (payments, Q-Asset trades, sponsorships, level moves and names, with an Account report to save as Markdown), Compare and QORT summaries.
 - **Activity:** each Minter Admin's participation, computed live from the chain.
 - **Phones and GO:** a bottom bar, sheets, forms that stay above the keyboard, safe areas and a compact landscape layout.
 - **Four themes** (Hub 3.0, Q-Mintership Classic, Black, White), following Hub's light/dark switch.
