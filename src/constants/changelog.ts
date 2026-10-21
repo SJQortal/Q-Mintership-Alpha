@@ -71,6 +71,7 @@ export const CHANGELOG: Release[] = [
           'Copy the link in the Explorer copies the page as it is, with its tab and filters.',
           'When a minting level moved from another account, Node online counts the time on both accounts, and the Minter Profile shows where the level came from and when it moved.',
           'Nominees proposed on chain, as Q-Mintership 3 did, show by name in the Explorer.',
+          'Explorer’s Transactions: an asset order says how it was filled and with whom (“Filled: bought 23 igorcoin from igorcoin for 529 QORT”), and the tab’s search finds it by that account too.',
         ],
       },
       {
@@ -118,6 +119,9 @@ export const CHANGELOG: Release[] = [
           'The Connections circle’s See the list opens the whole list under the circle: the accounts on the circle first, a clear line, then the ones it leaves out.',
           'When a minting level moved from another account, the Minter Profile shows the QORT minted there and the QORT minted by both accounts together.',
           'QORT minted reads accounts whose balance Core writes as 0E-8, and says when it can’t read something, with Retry.',
+          'Connections reads every QORT payment each way (up to 10,000) and every asset transfer and multi-payment (up to 5,000). Once Overview has read an account’s whole history, Connections, Compare and the sponsee lists use all of it.',
+          'Connections lists Q-Asset trades: who an account bought from and sold to, for what, with the two orders behind each; on the circle, what came in and what went out both count.',
+          'Connections has one Account report: everything read on chain about the account and its connections, with Core’s own sponsorship report, as a plain Markdown file to save or copy. Each connection names its block, date and full signature, and the report says what was read. It suggests reading the whole history first, and can do it there.',
         ],
       },
       {
