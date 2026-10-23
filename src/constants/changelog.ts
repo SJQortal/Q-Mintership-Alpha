@@ -77,6 +77,7 @@ export const CHANGELOG: Release[] = [
           'Each asset opens its own window: its description, how much there is, its last trade with its size, the open orders (what buyers offer and sellers ask), its biggest holders and its latest trades, who bought from whom.',
           'Assets the account owns are marked, and listed even when it holds none of them. An asset that comes in whole units only says Indivisible.',
           'The Overview lists its Q-Assets under At a glance, the ones worth most first; each opens its own window right there.',
+          'Settings → Appearance → Page width: Comfortable keeps each page in a centred column; Full window uses the whole width of the window, with decisions, nominations and Minter Admin polls side by side, as many as fit, and Home’s and Settings’ sections and History’s months too. The Explorer, Activity and their tables, charts and grids use the whole width. Forms keep their width. Phones look the same either way.',
         ],
       },
       {
@@ -108,6 +109,7 @@ export const CHANGELOG: Release[] = [
           'Hide a comment for everyone; any Minter Admin can show it again.',
           'A decision’s and a nomination’s page open the person in the Explorer.',
           'History has an Admin Board filter: the cards the Minter Admins posted on Q-Mintership 3’s encrypted Admin Board, proposed before Q-Mintership 4.0.0, with what each said, who it was about, its poll result and its comments, decrypted for you as you read them.',
+          'Closed Minter Admin polls are in History, among the decisions, by when voting ended: the question, who asked, the result and your vote, and a link to the poll. Minter Admin polls, a type of its own in History, shows them alone. Decisions lists the open ones, with a link to the closed ones, and a poll’s own page opens however long ago it closed.',
         ],
       },
       {
