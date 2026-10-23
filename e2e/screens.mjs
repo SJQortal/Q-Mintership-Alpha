@@ -9,6 +9,7 @@
  * best practices) violations.
  *
  *   node e2e/screens.mjs [--only home-admin,decisions] [--themes hub30] [--mode light] [--build] [--port 4173]
+ *                        [--sizes 1920x1080,2560x1440,3840x2160]
  *
  * The app's name, theme storage key, mock qortalRequest answers, Core routes
  * and screens are in e2e/screens.config.mjs. Nothing here publishes or
@@ -50,13 +51,24 @@ const PORT = Number(opt('port', '4173'));
 const MODE = opt('mode', 'dark') === 'light' ? 'light' : 'dark';
 const ctx = { mode: MODE, now: Date.now() };
 
-const VIEWPORTS = [
-  { name: '360x740', width: 360, height: 740, mobile: true },
-  { name: '390x844', width: 390, height: 844, mobile: true },
-  { name: '844x390', width: 844, height: 390, mobile: true },
-  { name: '700', width: 700, height: 900, mobile: false },
-  { name: '1280', width: 1280, height: 800, mobile: false },
-];
+const SIZES = opt('sizes', '');
+// --sizes swaps the five for others, such as big screens: WxH each, a phone when a side is under 500.
+const VIEWPORTS = SIZES
+  ? SIZES.split(',').map((size) => {
+      const [width, height] = size.split('x').map(Number);
+      if (!width || !height) {
+        console.error(`--sizes takes WxH,WxH (e.g. 1920x1080), not "${size}"`);
+        process.exit(1);
+      }
+      return { name: size, width, height, mobile: Math.min(width, height) < 500 };
+    })
+  : [
+      { name: '360x740', width: 360, height: 740, mobile: true },
+      { name: '390x844', width: 390, height: 844, mobile: true },
+      { name: '844x390', width: 844, height: 390, mobile: true },
+      { name: '700', width: 700, height: 900, mobile: false },
+      { name: '1280', width: 1280, height: 800, mobile: false },
+    ];
 
 // ---- tools -----------------------------------------------------------------
 function resolveFrom(dirs, names) {
@@ -276,7 +288,7 @@ for (const [id, e] of [...byRule.entries()].sort((a, b) => b[1].nodes - a[1].nod
 // report.json, so none is written).
 const ALL_THEMES = ['hub30', 'hub20', 'black', 'white'];
 const themeTag = themes.length === ALL_THEMES.length && ALL_THEMES.every((t) => themes.includes(t)) ? 'all' : themes.join(',');
-const reportFile = path.join(shots, `report-${themeTag}-${MODE}.json`);
+const reportFile = path.join(shots, `report-${themeTag}-${MODE}${SIZES ? `-${SIZES}` : ''}.json`);
 writeFileSync(reportFile, JSON.stringify(report, null, 1));
 lines.push(`Report: ${path.relative(root, reportFile)}`);
 console.log(lines.join('\n'));

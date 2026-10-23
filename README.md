@@ -2,7 +2,7 @@
 
 Who joins the MINTER group (694), and so who mints QORT. MINTER members at level 5+ and Minter Admins nominate; Minter Admins approve, reject, or let it expire. Published on QDN as `qortal://APP/Q-Mintership`.
 
-Version 4.0 is a rewrite on React 19.3 + MUI 9.4. It was first published as **Q-Mintership+** (on QDN from 14 October 2026, 1.0.0 on 20 October), where Minter Admins used it for real nominations, decisions and polls. Q-Mintership 3 (the boards, v3.0.5b) is kept in `legacy/` with its README; its cards, polls and comments stay readable in History.
+Version 4.0 is a rewrite on React 19.3 + MUI 9.4. It was first published as **Q-Mintership+** (on QDN from 14 October 2026, 1.0.0 on 20 October), where Minter Admins used it for real nominations, decisions and polls. Q-Mintership 3 (the boards, v3.0.7 as published on QDN) is kept in `legacy/` with its README and CHANGELOG; its cards, polls and comments stay readable in History.
 
 ## How it works
 
@@ -20,11 +20,13 @@ The other MINTER changes (remove a member, ban, lift a ban, make or remove a Min
 
 - **Home by status:** not in MINTER yet, nominated, member, former member or Minter Admin, with real numbers, the one thing to do next, and what changed since the last visit.
 - **Decisions:** one place for nominations, removals, bans and admin changes, by type or most urgent first, with `k of n`, a live countdown, who approved, rejected or is considering, and what an admin change would do to every waiting decision before it is signed.
-- **Talk:** public comments on every decision and nomination, advisory Yes/No votes from the community, and Minter Admin polls, notes and comments encrypted to the Minter Admins. Hub alerts (opt-in) for nominations, support and replies.
-- **History:** every MINTER change on chain, filtered by type and period, plus Q-Mintership 3's boards, read-only. Minter Admins also read its encrypted Admin Board there, each card decrypted for them and marked as proposed before 4.0.0.
+- **Talk:** public comments on every decision and nomination, advisory Yes/No votes from the community, and Minter Admin polls, notes and comments encrypted to the Minter Admins. Hub alerts (opt-in, in Settings) for nominations, support and replies; turning them on or off also removes Q-Mintership 3's alert rules for its boards.
+- **History:** every MINTER change on chain, filtered by type and period, plus Q-Mintership 3's boards, read-only. Minter Admins also see the closed Minter Admin polls among the changes, and read Q-Mintership 3's encrypted Admin Board there, each card decrypted for them and marked as proposed before 4.0.0.
 - **Explorer:** look up any account, name or transaction (read-only): an account's overview, transactions in plain words, the Q-Assets it holds (with what buyers would pay for them now), Minter Profile and names. Minter Admins, Dev Admins and level 5+ members also see connections between accounts (payments, Q-Asset trades, sponsorships, level moves and names, with an Account report to save as Markdown), Compare and QORT summaries.
 - **Activity:** each Minter Admin's participation, computed live from the chain.
 - **Phones and GO:** a bottom bar, sheets, forms that stay above the keyboard, safe areas and a compact landscape layout.
+- **Big screens:** Settings → Appearance → Page width. Full window spreads the pages across the window, with decisions, nominations and sections side by side; Comfortable (the default) keeps a centred column.
+- **Q-Minter:** Home links the Q-Minter Guide's minting overview and the history of minting for every status, as Q-Mintership 3.0.7 did.
 - **Four themes** (Hub 3.0, Q-Mintership Classic, Black, White), following Hub's light/dark switch.
 
 What's new lists everything (Settings → About, from `src/constants/changelog.ts`).
@@ -67,7 +69,7 @@ Then publish the contents of `dist/` as `APP` under the name `Q-Mintership`. To 
 
   A record's publisher comes from QDN, never from its body.
 - **Reads** are paged, bounded and cached GETs, never `limit=0`. Busy accounts in the Explorer are read in pages, two searches at a time.
-- **Q-Mintership 3's data** (its cards, polls and comments) is read for History and the Explorer, and never written. Its encrypted Admin Board (`MAIL_PRIVATE` `card-MAC-…` and its comments) is read for Minter Admins only, decrypted through Hub's `DECRYPT_DATA` for the signed-in admin; a card posted before they became one stays locked.
+- **Q-Mintership 3's data** (its cards, polls and comments) is read for History and the Explorer, and never written. It is read by its bodies, so 3.0.7's notification markers in the descriptions (`qmintership:…`) change nothing; 4.0's alerts match its own `qmp-` records, so alerts don't cross between 3.0.7 and 4.0. Its encrypted Admin Board (`MAIL_PRIVATE` `card-MAC-…` and its comments) is read for Minter Admins only, decrypted through Hub's `DECRYPT_DATA` for the signed-in admin; a card posted before they became one stays locked.
 
 The full contract (every identifier, JSON shape, read and Hub request) and the test records are in [docs/apps/Q-Mintership+.md](https://github.com/SJQortal/Q-Apps-Plus/blob/main/docs/apps/Q-Mintership%2B.md).
 
@@ -84,5 +86,8 @@ The full contract (every identifier, JSON shape, read and Hub request) and the t
   - Polls and voting on cards: Minter Admins' answers on chain decide.
   - The broadcast after every action: Home's "Since your last visit" and Hub alerts replace it.
   - Stats snapshot publishing: Activity computes everything live.
+  - The Stats page (Mintership Stats, refined in 3.0.6): Activity (MINTER's pulse, each Minter Admin's part, the level spread) and the Explorer cover what it showed; its per-nominator view of how many nominees became minters isn't rebuilt yet.
+  - 3.0.7's notification prompt at sign-in: alerts are asked for only when turned on in Settings → Notifications.
+  - 3.0.7's in-app preview of a `qortal://` link: links open in a new Hub tab.
   - Posting on the encrypted Admin Board: replaced by Minter Admin polls, notes and comments. Its old cards stay readable in History for Minter Admins.
 - **Updates** are built and tested as Q-Mintership+ in [SJQortal/Q-Apps-Plus](https://github.com/SJQortal/Q-Apps-Plus), published there for the community first, then offered here as pull requests.

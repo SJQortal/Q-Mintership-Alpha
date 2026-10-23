@@ -1,4 +1,4 @@
-> Q-Mintership 3 (v3.0.5b), the boards that Q-Mintership 4.0 replaces, kept here for reference. Its README follows as it was.
+> Q-Mintership 3 (v3.0.7, as published on QDN; what changed is in its [CHANGELOG](CHANGELOG.md)), the boards that Q-Mintership 4.0 replaces, kept here for reference. Its README follows as it was.
 
 # Q-Mintership-Alpha
 
