@@ -73,7 +73,7 @@
     <script>
       // Variable-based versioning (credit: QuickMythril).
       // Kakashi Note: Keep the release label centralized so test builds can be updated in one place.
-      const Q_MINTERSHIP_VERSION = "v3.0.5b" // Update here in the future
+      const Q_MINTERSHIP_VERSION = "v3.0.7" // Update here in the future
       document.addEventListener("DOMContentLoaded", () => {
         // Kakashi Note: Populate all version slots so mobile and desktop headers stay in sync.
         document.querySelectorAll(".version").forEach((el) => {
@@ -155,26 +155,41 @@
             </ul>
 
             <div class="mbr-section-btn-main" role="tablist">
-              <a class="btn btn-danger display-4" href="MINTERSHIP-FORUM"
-                >FORUM<br
-              /></a>
-              <a class="btn admin-btn btn-secondary display-4" href="TOOLS"
-                >ADMIN TOOLS</a
-              ><a
+              <a class="btn btn-danger display-4" href="MINTERSHIP-FORUM">
+                FORUM<br />
+              </a>
+              <a class="btn admin-btn btn-secondary display-4" href="TOOLS">
+                ADMIN TOOLS
+              </a>
+              <a
                 class="btn admin-btn btn-secondary display-4"
                 href="ADMINBOARD"
-                >ADMIN BOARD</a
-              ><a class="btn btn-danger display-4" href="MINTERS"
-                >MINTER BOARD</a
-              ><a class="btn btn-info display-4" href="STATS">STATS</a
-              ><a class="btn btn-danger display-4" href="ADDREMOVEADMIN"
-                >MAM BOARD</a
               >
+                ADMIN BOARD
+              </a>
+              <a class="btn btn-danger display-4" href="MINTERS">
+                MINTER BOARD
+              </a>
+              <a class="btn btn-danger display-4" href="ADDREMOVEADMIN">
+                MAM BOARD
+              </a>
+              <a class="btn btn-info display-4 stats-link" href="STATS">
+                STATS
+              </a>
+              <a
+                class="btn btn-info display-4 q-minter-link"
+                href="#"
+                data-qortal-link="qortal://WEBSITE/Q-Minter/#/minting-overview"
+              >
+                Q-Minter
+              </a>
             </div>
           </div>
         </div>
       </nav>
     </section>
+
+    <div id="hub-notification-prompt" class="notification-group-prompt" hidden></div>
 
     <section
       data-bs-version="5.1"
@@ -257,6 +272,21 @@
             </a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section
+      data-bs-version="5.1"
+      class="qm-history-link-row"
+      aria-label="Q-Minter history"
+    >
+      <div class="container">
+        <a
+          class="btn btn-primary display-4 q-minter-link"
+          href="#"
+          data-qortal-link="qortal://WEBSITE/Q-Minter/#/history"
+          >The History of Minting</a
+        >
       </div>
     </section>
 
@@ -402,6 +432,7 @@
     <!-- Order here MATTERS, we MUST load the scripts in the correct order so that all the functions will work properly -->
     <script src="./assets/js/QortalApi.js"></script>
     <script src="./assets/js/Shared.js"></script>
+    <script src="./assets/js/HubNotifications.js"></script>
     <script src="./assets/js/MinterBoard.js"></script>
     <script src="./assets/js/AdminBoard.js"></script>
     <script src="./assets/js/ARBoard.js"></script>

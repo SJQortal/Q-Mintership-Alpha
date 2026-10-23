@@ -9,6 +9,9 @@ const NOMINATOR_METHOD_START_TS = Date.parse("2026-06-01T00:00:00Z")
 const STATS_LEGACY_CLASSIFICATION_WINDOW_MS = 7 * 24 * 60 * 60 * 1000
 const STATS_FOUNDER_EFFECTIVE_LEVEL = 10
 const STATS_COMPILE_MODAL_TYPE = "stats-compile"
+const STATS_PAGE_TITLE = "Mintership Stats"
+const STATS_PAGE_STATUS_LABEL = "Beta"
+const STATS_PAGE_DOCUMENT_TITLE = `${STATS_PAGE_TITLE} - ${STATS_PAGE_STATUS_LABEL}`
 
 const statsBoardState = {
   snapshotResources: [],
@@ -827,7 +830,7 @@ const buildStatsFlexibleTableHtml = ({
 
 const buildStatsPublisherRows = (
   records = [],
-  { adminAddressSet = new Set() } = {}
+  { adminAddressSet = new Set(), currentMinterAddressSet = new Set() } = {}
 ) => {
   const rowsByKey = new Map()
   const summary = {
@@ -851,7 +854,6 @@ const buildStatsPublisherRows = (
     const isLegacy = Boolean(record?.isLegacy)
     const isApprovedInvite = Boolean(record?.isApprovedInvite)
     const isPendingInvite = Boolean(record?.isPendingInvite)
-    const isConverted = Boolean(record?.isConverted)
     const isKicked = Boolean(record?.isKicked)
     const isBanned = Boolean(record?.isBanned)
     const publisherName = String(record?.nominatorName || "Unknown").trim()
@@ -880,7 +882,11 @@ const buildStatsPublisherRows = (
         summary.legacyPendingCount += 1
       }
     }
-    if (isConverted) {
+    const isCurrentMinter = resolveStatsRecordCurrentMinterStatus(
+      record,
+      currentMinterAddressSet
+    )
+    if (isCurrentMinter) {
       summary.currentMinterCount += 1
       if (isLegacy) {
         summary.legacyCurrentMinterCount += 1
@@ -938,7 +944,7 @@ const buildStatsPublisherRows = (
       if (isPendingInvite) {
         row.legacyPendingCount += 1
       }
-      if (isConverted) {
+      if (isCurrentMinter) {
         row.legacyCurrentMinterCount += 1
       }
       if (isKicked) {
@@ -956,7 +962,7 @@ const buildStatsPublisherRows = (
     if (isPendingInvite) {
       row.pendingCount += 1
     }
-    if (isConverted) {
+    if (isCurrentMinter) {
       row.currentMinterCount += 1
     }
     if (isKicked) {
@@ -999,9 +1005,11 @@ const buildStatsSnapshotRollups = (session = null) => {
   const adminAddressSet = buildStatsGroupAddressSet(
     referenceData.minterAdminAddresses || []
   )
+  const currentMinterAddressSet = buildStatsCurrentMinterAddressSet(referenceData)
 
   const allPublisherAggregation = buildStatsPublisherRows(records, {
     adminAddressSet,
+    currentMinterAddressSet,
   })
   const publisherRows = Array.isArray(allPublisherAggregation.rows)
     ? allPublisherAggregation.rows
@@ -1653,6 +1661,21 @@ const buildStatsSourceResourceList = (resources = []) => {
   })
 }
 
+const sortStatsResourcesNewestFirst = (resources = []) =>
+  buildStatsSourceResourceList(resources).sort((a, b) => {
+    const timeDiff = getStatsBoardTimestamp(b) - getStatsBoardTimestamp(a)
+    if (timeDiff !== 0) {
+      return timeDiff
+    }
+    const identifierDiff = String(b.identifier || "").localeCompare(
+      String(a.identifier || "")
+    )
+    if (identifierDiff !== 0) {
+      return identifierDiff
+    }
+    return String(b.name || "").localeCompare(String(a.name || ""))
+  })
+
 const isStatsProgressIdentifier = (identifier = "") =>
   String(identifier || "")
     .trim()
@@ -1748,9 +1771,29 @@ const fetchLatestStatsProgressCheckpoint = async (
     verifiedAdminAddressSet
   )
 
-  const checkpoint = await fetchStatsBoardQdnJsonResource(
-    progressResources[0] || null
-  )
+  let checkpoint = null
+  for (const progressResource of progressResources) {
+    const payload = await fetchStatsBoardQdnJsonResource(progressResource)
+    const progressIdentifier = String(
+      payload?.progressIdentifier || progressResource?.identifier || ""
+    ).trim()
+    const isValidProgressPayload = Boolean(
+      payload &&
+        typeof payload === "object" &&
+        (payload.compileType === "stats-progress" ||
+          isStatsProgressIdentifier(progressIdentifier)) &&
+        payload.source
+    )
+    if (!isValidProgressPayload) {
+      continue
+    }
+
+    checkpoint = {
+      ...payload,
+      progressIdentifier,
+    }
+    break
+  }
   statsBoardState.latestProgressCheckpoint = checkpoint || null
   statsBoardState.latestProgressLoadedAt = now
   return checkpoint || null
@@ -1765,6 +1808,41 @@ const buildStatsGroupAddressSet = (members = []) =>
       .map((member) => normalizeStatsGroupMemberAddress(member).toLowerCase())
       .filter(Boolean)
   )
+
+const buildStatsCurrentMinterAddressSet = (referenceData = {}) =>
+  buildStatsGroupAddressSet([
+    ...(Array.isArray(referenceData?.minterGroupAddresses)
+      ? referenceData.minterGroupAddresses
+      : []),
+    ...(Array.isArray(referenceData?.minterAdminAddresses)
+      ? referenceData.minterAdminAddresses
+      : []),
+  ])
+
+const resolveStatsRecordCurrentMinterStatus = (
+  record = {},
+  currentMinterAddressSet = new Set()
+) => {
+  const normalizedAddressSet =
+    currentMinterAddressSet instanceof Set ? currentMinterAddressSet : new Set()
+  const fallbackStatus = Boolean(record?.isConverted)
+
+  if (normalizedAddressSet.size === 0) {
+    return fallbackStatus
+  }
+
+  const targetAddress = String(
+    record?.isLegacy
+      ? record?.nominatorAddress || ""
+      : record?.nomineeAddress || ""
+  ).trim()
+
+  if (!targetAddress) {
+    return fallbackStatus
+  }
+
+  return normalizedAddressSet.has(targetAddress.toLowerCase())
+}
 
 const fetchStatsBoardGroupData = async (force = false) => {
   const now = Date.now()
@@ -2239,6 +2317,47 @@ const normalizeStatsCompileRecord = (record = {}) => ({
   isBanned: Boolean(record.isBanned),
 })
 
+const resetStatsCompileSessionAggregates = (session = null) => {
+  if (!session) {
+    return null
+  }
+
+  session.summary = {
+    totalNominations: 0,
+    uniqueNominators: 0,
+    uniqueNominees: 0,
+    totalConvertedToMinter: 0,
+    totalApprovedInvites: 0,
+    totalPendingInvites: 0,
+    totalKickedAndBanned: 0,
+    legacyCardCount: 0,
+    legacyConvertedToMinter: 0,
+    legacyApprovedInvites: 0,
+    legacyPendingInvites: 0,
+    legacyKickedAndBanned: 0,
+  }
+  session.uniqueNomineeKeys = {}
+  session.nominatorRowsByKey = {}
+  session.records = []
+  return session
+}
+
+const rebuildStatsCompileSessionAggregates = (session = null, records = null) => {
+  if (!session) {
+    return null
+  }
+
+  const recordsToReplay = Array.isArray(records)
+    ? records.map((record) => normalizeStatsCompileRecord(record))
+    : Array.isArray(session.records)
+    ? session.records.map((record) => normalizeStatsCompileRecord(record))
+    : []
+
+  resetStatsCompileSessionAggregates(session)
+  recordsToReplay.forEach((record) => addStatsCompileRecordToSession(session, record))
+  return session
+}
+
 const normalizeStatsResourcePublisherAddress = (payload = null) =>
   String(
     payload?.generatedBy?.address ||
@@ -2271,6 +2390,9 @@ const hydrateStatsCompileSession = (checkpoint = null) => {
     sourceResources,
   })
 
+  session.progressIdentifier = String(
+    checkpoint.progressIdentifier || session.progressIdentifier || ""
+  ).trim()
   session.createdAt = Number(checkpoint.createdAt || checkpoint.generatedAt || Date.now())
   session.updatedAt = Number(checkpoint.updatedAt || checkpoint.compiledAt || Date.now())
   session.completed = Boolean(checkpoint.completed)
@@ -2340,6 +2462,10 @@ const hydrateStatsCompileSession = (checkpoint = null) => {
       }
   session.nominatorRowsByKey = {
     ...(checkpoint.nominatorRowsByKey || {}),
+  }
+
+  if (session.records.length > 0) {
+    rebuildStatsCompileSessionAggregates(session)
   }
 
   return session
@@ -2455,7 +2581,10 @@ const publishStatsResources = async (resources = []) => {
   }
 
   if (typeof publishMultipleResources === "function") {
-    await publishMultipleResources(publishList)
+    const response = await publishMultipleResources(publishList)
+    if (!response) {
+      throw new Error("QDN multi-resource publish failed.")
+    }
   } else {
     for (const resource of publishList) {
       await qortalRequest({
@@ -2495,7 +2624,7 @@ const filterAdminPublishedStatsResources = async (
       ? await runWithConcurrency(tasks, 5)
       : await Promise.all(tasks.map((task) => task()))
 
-  return buildStatsSourceResourceList(verifiedResources.filter(Boolean))
+  return sortStatsResourcesNewestFirst(verifiedResources.filter(Boolean))
 }
 
 const buildStatsSnapshotPublishResource = async (
@@ -2660,29 +2789,89 @@ const addStatsCompileRecordToSession = (session = null, record = null) => {
   row.lastNominationAt = Math.max(row.lastNominationAt || 0, normalizedRecord.createdAt || 0)
 }
 
+const buildStatsResumableCheckpointFromRecords = ({
+  checkpoint = null,
+  sourceResources = [],
+  records = [],
+  nextIndex = 0,
+} = {}) => {
+  if (!checkpoint) {
+    return null
+  }
+
+  const normalizedSourceResources = buildStatsSourceResourceList(sourceResources)
+  const session = createStatsCompileSession({
+    snapshotTimestamp:
+      Number(checkpoint.snapshotTimestamp || checkpoint.generatedAt || Date.now()) ||
+      Date.now(),
+    sourceResources: normalizedSourceResources,
+    referenceData: {
+      minterGroupAddresses: [],
+      minterAdminAddresses: [],
+    },
+  })
+
+  session.progressIdentifier = String(
+    checkpoint.progressIdentifier || session.progressIdentifier || ""
+  ).trim()
+  session.createdAt = Number(checkpoint.createdAt || checkpoint.generatedAt || Date.now())
+  session.updatedAt = Number(checkpoint.updatedAt || checkpoint.compiledAt || Date.now())
+  session.completed = false
+  session.resumedFromProgress = true
+  session.batchSize = Number(checkpoint.batchSize || session.batchSize) || STATS_COMPILE_BATCH_SIZE
+  session.nextIndex = Math.max(
+    0,
+    Math.min(Number(nextIndex || 0), normalizedSourceResources.length)
+  )
+  session.batchesProcessed = Math.max(0, Number(checkpoint.batchesProcessed || 0))
+  session.generatedBy = {
+    name: String(checkpoint.generatedBy?.name || "").trim(),
+    address: String(checkpoint.generatedBy?.address || "").trim(),
+  }
+  session.validationIssueCount = Math.max(
+    0,
+    Number(checkpoint.validationIssueCount || 0)
+  )
+  session.validationIssues = Array.isArray(checkpoint.validationIssues)
+    ? checkpoint.validationIssues.map((issue) => ({
+        identifier: String(issue?.identifier || "").trim(),
+        reason: String(issue?.reason || "").trim(),
+        detail: String(issue?.detail || "").trim(),
+      }))
+    : []
+  session.finalSnapshotIdentifier = ""
+  session.finalPublishedAt = 0
+  session.records = []
+  session.uniqueNomineeKeys = {}
+  session.nominatorRowsByKey = {}
+  session.summary = {
+    totalNominations: 0,
+    uniqueNominators: 0,
+    uniqueNominees: 0,
+    totalConvertedToMinter: 0,
+    totalApprovedInvites: 0,
+    totalPendingInvites: 0,
+    totalKickedAndBanned: 0,
+    legacyCardCount: 0,
+    legacyConvertedToMinter: 0,
+    legacyApprovedInvites: 0,
+    legacyPendingInvites: 0,
+    legacyKickedAndBanned: 0,
+  }
+
+  const normalizedRecords = Array.isArray(records) ? records : []
+  normalizedRecords.forEach((record) => addStatsCompileRecordToSession(session, record))
+
+  return serializeStatsCompileSession(session)
+}
+
 const buildStatsSnapshotFromSession = (session = null) => {
   if (!session) {
     return null
   }
 
+  rebuildStatsCompileSessionAggregates(session)
   const rollups = buildStatsSnapshotRollups(session)
-  const nominators = Object.values(session.nominatorRowsByKey || {})
-    .map((row) => ({
-      ...row,
-      conversionLabel: formatStatsPercent(
-        row.nominationCount > 0 ? row.convertedCount / row.nominationCount : 0
-      ),
-    }))
-    .sort((a, b) => {
-      if (b.nominationCount !== a.nominationCount) {
-        return b.nominationCount - a.nominationCount
-      }
-      if (b.convertedCount !== a.convertedCount) {
-        return b.convertedCount - a.convertedCount
-      }
-      return b.lastNominationAt - a.lastNominationAt
-    })
-
   const currentCards = Array.isArray(session.records)
     ? session.records.filter((record) => !record.isLegacy)
     : []
@@ -2690,8 +2879,6 @@ const buildStatsSnapshotFromSession = (session = null) => {
     ? session.records.filter((record) => record.isLegacy)
     : []
 
-  const uniqueNominators = Object.keys(session.nominatorRowsByKey || {}).length
-  const uniqueNominees = Object.keys(session.uniqueNomineeKeys || {}).length
   const legacyPublisherSummary = rollups.legacyPublisherSummary || {}
   const legacyPublisherRows = Array.isArray(rollups.legacyPublisherRows)
     ? rollups.legacyPublisherRows
@@ -2714,6 +2901,87 @@ const buildStatsSnapshotFromSession = (session = null) => {
         )
       : [],
   }
+  const currentMinterAddressSet = buildStatsCurrentMinterAddressSet(referenceData)
+  const uniqueNomineeKeys = new Set()
+  const nominatorRowsByKey = {}
+  currentCards.forEach((record) => {
+    const nomineeKey = String(
+      record.nomineeAddress || record.nomineeName || ""
+    ).toLowerCase()
+    if (nomineeKey) {
+      uniqueNomineeKeys.add(nomineeKey)
+    }
+
+    const nominatorKey = String(
+      record.nominatorAddress || record.nominatorName || ""
+    ).toLowerCase()
+    if (!nominatorKey) {
+      return
+    }
+
+    const row =
+      nominatorRowsByKey[nominatorKey] || {
+        key: nominatorKey,
+        displayName: record.nominatorName || "Unknown",
+        address: record.nominatorAddress || "",
+        nominationCount: 0,
+        convertedCount: 0,
+        approvedCount: 0,
+        pendingCount: 0,
+        kickedCount: 0,
+        bannedCount: 0,
+        lastNominationAt: 0,
+      }
+
+    row.nominationCount += 1
+    if (resolveStatsRecordCurrentMinterStatus(record, currentMinterAddressSet)) {
+      row.convertedCount += 1
+    }
+    if (record.isApprovedInvite) {
+      row.approvedCount += 1
+    }
+    if (record.isPendingInvite) {
+      row.pendingCount += 1
+    }
+    if (record.isKicked) {
+      row.kickedCount += 1
+    }
+    if (record.isBanned) {
+      row.bannedCount += 1
+    }
+    row.lastNominationAt = Math.max(row.lastNominationAt || 0, record.createdAt || 0)
+    nominatorRowsByKey[nominatorKey] = row
+  })
+  const nominators = Object.values(nominatorRowsByKey)
+    .map((row) => ({
+      ...row,
+      conversionLabel: formatStatsPercent(
+        row.nominationCount > 0 ? row.convertedCount / row.nominationCount : 0
+      ),
+    }))
+    .sort((a, b) => {
+      if (b.nominationCount !== a.nominationCount) {
+        return b.nominationCount - a.nominationCount
+      }
+      if (b.convertedCount !== a.convertedCount) {
+        return b.convertedCount - a.convertedCount
+      }
+      return b.lastNominationAt - a.lastNominationAt
+    })
+  const uniqueNominators = nominators.length
+  const uniqueNominees = uniqueNomineeKeys.size
+  const currentConvertedToMinter = currentCards.filter((record) =>
+    resolveStatsRecordCurrentMinterStatus(record, currentMinterAddressSet)
+  ).length
+  const currentApprovedInvites = currentCards.filter(
+    (record) => record.isApprovedInvite
+  ).length
+  const currentPendingInvites = currentCards.filter(
+    (record) => record.isPendingInvite
+  ).length
+  const currentKickedAndBanned = currentCards.filter(
+    (record) => record.isKicked || record.isBanned
+  ).length
 
   return {
     schemaVersion: 2,
@@ -2742,26 +3010,31 @@ const buildStatsSnapshotFromSession = (session = null) => {
     },
     referenceData,
     summary: {
-      totalNominations: Number(session.summary?.totalNominations || 0),
+      totalNominations: Number(currentCards.length || 0),
       uniqueNominators,
       uniqueNominees,
-      totalConvertedToMinter: Number(session.summary?.totalConvertedToMinter || 0),
-      totalApprovedInvites: Number(session.summary?.totalApprovedInvites || 0),
-      totalPendingInvites: Number(session.summary?.totalPendingInvites || 0),
-      totalKickedAndBanned: Number(session.summary?.totalKickedAndBanned || 0),
-      legacyCardCount: Number(session.summary?.legacyCardCount || 0),
-      legacyConvertedToMinter: Number(session.summary?.legacyConvertedToMinter || 0),
-      legacyApprovedInvites: Number(session.summary?.legacyApprovedInvites || 0),
-      legacyPendingInvites: Number(session.summary?.legacyPendingInvites || 0),
-      legacyKickedAndBanned: Number(session.summary?.legacyKickedAndBanned || 0),
+      totalConvertedToMinter: Number(currentConvertedToMinter || 0),
+      totalApprovedInvites: Number(currentApprovedInvites || 0),
+      totalPendingInvites: Number(currentPendingInvites || 0),
+      totalKickedAndBanned: Number(currentKickedAndBanned || 0),
+      legacyCardCount: Number(legacyCards.length || 0),
+      legacyConvertedToMinter: Number(
+        legacyPublisherSummary.currentMinterCount || 0
+      ),
+      legacyApprovedInvites: Number(legacyPublisherSummary.invitedCount || 0),
+      legacyPendingInvites: Number(legacyPublisherSummary.pendingCount || 0),
+      legacyKickedAndBanned: Number(
+        (legacyPublisherSummary.kickedCount || 0) +
+          (legacyPublisherSummary.bannedCount || 0)
+      ),
       conversionLabel: formatStatsPercent(
         currentCards.length > 0
-          ? Number(session.summary?.totalConvertedToMinter || 0) / currentCards.length
+          ? Number(currentConvertedToMinter || 0) / currentCards.length
           : 0
       ),
       legacyConversionLabel: formatStatsPercent(
         legacyCards.length > 0
-          ? Number(session.summary?.legacyConvertedToMinter || 0) / legacyCards.length
+          ? Number(legacyPublisherSummary.currentMinterCount || 0) / legacyCards.length
           : 0
       ),
     },
@@ -3279,7 +3552,7 @@ const buildStatsCompileOptionsHtml = () => {
 
       <div class="stats-compile-modal-note">
         Pick the timestamp that will be baked into the snapshot identifier. Choosing <strong>Update latest snapshot</strong> keeps the newest stats identifier in place when one already exists, rather than creating a brand-new entry. Validation is read-only and re-create starts over from the beginning.
-        When the most recent checkpoint is already finished, Update stats will try to reuse it as a baseline if the source list still matches; otherwise it falls back to a full rebuild.
+        When the most recent checkpoint is already finished, Update stats rechecks the source list and record coverage first. If it finds new cards or missing data points, it resumes from the first recoverable point; otherwise it performs a clean rebuild.
       </div>
 
       <div class="stats-compile-field">
@@ -3791,29 +4064,43 @@ const buildStatsResumeCheckpointFromCompletedRun = async (checkpoint = null) => 
     return null
   }
 
-  return {
-    ...checkpoint,
-    completed: false,
-    resumedFromProgress: true,
-    nextIndex: previousResources.length,
-    updatedAt: Date.now(),
-    finalSnapshotIdentifier: "",
-    finalPublishedAt: 0,
-    referenceData: {
-      minterGroupAddresses: [],
-      minterAdminAddresses: [],
-    },
-    source: {
-      ...(checkpoint.source || {}),
-      cardCount: currentResources.length,
-      latestCardTimestamp: currentResources.reduce(
-        (latestTimestamp, resource) =>
-          Math.max(latestTimestamp, getStatsBoardTimestamp(resource)),
-        0
-      ),
-      resources: currentResources,
-    },
+  const previousRecords = Array.isArray(checkpoint.records)
+    ? checkpoint.records.map((record) => normalizeStatsCompileRecord(record))
+    : []
+
+  if (previousRecords.length > previousResources.length) {
+    return null
   }
+
+  let resumeIndex = previousRecords.length
+  for (let index = 0; index < previousRecords.length; index += 1) {
+    const sourceIdentifier = String(previousResources[index]?.identifier || "").trim()
+    const recordIdentifier = String(previousRecords[index]?.cardIdentifier || "").trim()
+    if (!sourceIdentifier || sourceIdentifier !== recordIdentifier) {
+      resumeIndex = index
+      break
+    }
+  }
+
+  const hasNewCards = currentResources.length > previousResources.length
+  const hasTrailingGaps = previousRecords.length < previousResources.length
+  const hasMismatch = resumeIndex < previousRecords.length
+
+  if (!hasNewCards && !hasTrailingGaps && !hasMismatch) {
+    return null
+  }
+
+  if (resumeIndex <= 0) {
+    return null
+  }
+
+  const recordsToRetain = previousRecords.slice(0, resumeIndex)
+  return buildStatsResumableCheckpointFromRecords({
+    checkpoint,
+    sourceResources: currentResources,
+    records: recordsToRetain,
+    nextIndex: resumeIndex,
+  })
 }
 
 const startStatsWorkflowFromModal = async ({
@@ -3829,6 +4116,10 @@ const startStatsWorkflowFromModal = async ({
       : "compile"
   const resumeSummary = getStatsResumeCheckpointSummary(resumeCheckpoint)
   const isResumeRun = Boolean(resumeSummary) && normalizedWorkflow !== "validation"
+  const isResumeRefreshOnly =
+    Boolean(isResumeRun) &&
+    Boolean(resumeCheckpoint?.completed) &&
+    Number(resumeSummary?.remaining || 0) === 0
   const effectivePublishTimestamp = isResumeRun
     ? Number(
         resumeCheckpoint?.snapshotTimestamp ||
@@ -3845,18 +4136,28 @@ const startStatsWorkflowFromModal = async ({
     `${MINTER_STATS_IDENTIFIER_PREFIX}-${effectivePublishTimestamp}`
   statsCompileModalState.phase = "progress"
   statsCompileModalState.message = isResumeRun
-    ? `Resuming stats update for ${formatStatsDate(effectivePublishTimestamp)}${
-        resumeSummary?.checkpointIdentifier
-          ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
-          : ""
-      }.`
+    ? isResumeRefreshOnly
+      ? `Refreshing the completed stats snapshot for ${formatStatsDate(
+          effectivePublishTimestamp
+        )}${
+          resumeSummary?.checkpointIdentifier
+            ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
+            : ""
+        }.`
+      : `Resuming stats update for ${formatStatsDate(effectivePublishTimestamp)}${
+          resumeSummary?.checkpointIdentifier
+            ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
+            : ""
+        }.`
     : normalizedWorkflow === "validation"
     ? `Starting stats data validation for ${formatStatsDate(effectivePublishTimestamp)}.`
     : normalizedWorkflow === "recreate"
     ? `Re-creating stats data from scratch for ${formatStatsDate(effectivePublishTimestamp)}.`
     : "Starting stats update..."
   statsCompileModalState.subtitle = isResumeRun
-    ? `Continuing checkpoint ${resumeSummary?.checkpointIdentifier || "Unavailable"} at card ${resumeSummary?.nextCardNumber || 1} of ${resumeSummary?.total || 0} (${resumeSummary?.remaining || 0} remaining).`
+    ? isResumeRefreshOnly
+      ? `Checkpoint ${resumeSummary?.checkpointIdentifier || "Unavailable"} already covers ${resumeSummary?.total || 0} cards. The published snapshot will be rechecked before publishing.`
+      : `Continuing checkpoint ${resumeSummary?.checkpointIdentifier || "Unavailable"} at card ${resumeSummary?.nextCardNumber || 1} of ${resumeSummary?.total || 0} (${resumeSummary?.remaining || 0} remaining).`
     : normalizedWorkflow === "validation"
     ? "This audits source data and admin-published stats resources without publishing anything."
     : `Snapshot identifier will be ${statsCompileModalState.identifierPreview}.`
@@ -3884,7 +4185,7 @@ const startStatsCompileFromModal = async () => {
   if (latestCheckpoint && latestCheckpoint.completed) {
     const resumableCheckpoint =
       await buildStatsResumeCheckpointFromCompletedRun(latestCheckpoint)
-    if (resumableCheckpoint) {
+    if (resumableCheckpoint && !resumableCheckpoint.completed) {
       await startStatsWorkflowFromModal({
         workflow: "compile",
         publishTimestamp: resolveStatsCompileTimestamp(),
@@ -4089,19 +4390,26 @@ const fetchLatestPublishedStatsSnapshot = async (
         verifiedResources,
         verifiedAdminAddressSet
       )
-  const latestResource = resourcesToUse[0]
-  if (!latestResource) {
-    statsBoardState.latestSnapshot = null
-    return null
+  for (const latestResource of resourcesToUse) {
+    const snapshot = await fetchStatsBoardQdnJsonResource(latestResource)
+    const isValidSnapshot = Boolean(
+      snapshot &&
+        typeof snapshot === "object" &&
+        !isStatsProgressIdentifier(latestResource?.identifier || "") &&
+        snapshot.source &&
+        snapshot.summary &&
+        isStatsResourcePublishedByAdmin(snapshot, verifiedAdminAddressSet)
+    )
+    if (!isValidSnapshot) {
+      continue
+    }
+
+    statsBoardState.latestSnapshot = snapshot
+    return snapshot
   }
 
-  const snapshot = await fetchStatsBoardQdnJsonResource(latestResource)
-  if (!isStatsResourcePublishedByAdmin(snapshot, verifiedAdminAddressSet)) {
-    statsBoardState.latestSnapshot = null
-    return null
-  }
-  statsBoardState.latestSnapshot = snapshot || null
-  return snapshot || null
+  statsBoardState.latestSnapshot = null
+  return null
 }
 
 const getStatsBoardNomineeName = (cardData = {}) =>
@@ -4143,7 +4451,10 @@ const buildStatsLiveSnapshot = async ({
     detail: "Pulling published MinterBoard cards and cached metadata.",
   })
 
-  const uniqueResources = await fetchStatsBoardSourceResources(true)
+  const [uniqueResources, groupData] = await Promise.all([
+    fetchStatsBoardSourceResources(true),
+    fetchStatsBoardGroupData(true),
+  ])
   emitProgress({
     key: "load-source",
     status: "done",
@@ -4193,6 +4504,11 @@ const buildStatsLiveSnapshot = async ({
     detail: "Building the nominator-era leaderboard and legacy totals.",
   })
 
+  const currentMinterAddressSet = buildStatsCurrentMinterAddressSet({
+    minterGroupAddresses: Array.from(groupData?.minterGroupAddressSet || []),
+    minterAdminAddresses: Array.from(groupData?.minterAdminAddressSet || []),
+  })
+
   const nominatorMap = new Map()
   const uniqueNominees = new Set()
   const currentRecords = []
@@ -4207,9 +4523,13 @@ const buildStatsLiveSnapshot = async ({
   let legacyKickedAndBanned = 0
 
   for (const record of records) {
+    const isCurrentMinter = resolveStatsRecordCurrentMinterStatus(
+      record,
+      currentMinterAddressSet
+    )
     if (record.isLegacy) {
       legacyRecords.push(record)
-      if (record.isConverted) {
+      if (isCurrentMinter) {
         legacyConvertedToMinter += 1
       }
       if (record.isApprovedInvite) {
@@ -4231,7 +4551,7 @@ const buildStatsLiveSnapshot = async ({
       uniqueNominees.add(nomineeKey)
     }
 
-    if (record.isConverted) {
+    if (isCurrentMinter) {
       totalConvertedToMinter += 1
     }
     if (record.isApprovedInvite) {
@@ -4261,7 +4581,7 @@ const buildStatsLiveSnapshot = async ({
       }
 
     row.nominationCount += 1
-    if (record.isConverted) row.convertedCount += 1
+    if (isCurrentMinter) row.convertedCount += 1
     if (record.isApprovedInvite) row.approvedCount += 1
     if (record.isPendingInvite) row.pendingCount += 1
     if (record.isKicked) row.kickedCount += 1
@@ -4448,6 +4768,11 @@ const compileAndPublishStats = async ({ publishTimestamp = Date.now() } = {}) =>
     return
   }
 
+  if (!userState.accountName) {
+    alert("A registered name is required to publish stats snapshots.")
+    return
+  }
+
   statsBoardState.compiling = true
   statsBoardState.pauseRequested = false
   setStatsCompileButtonBusy(true)
@@ -4608,21 +4933,31 @@ const compileStatsProgressRun = async ({
     return
   }
 
-  statsBoardState.compiling = true
-  statsBoardState.pauseRequested = false
-  setStatsCompileButtonBusy(true)
   const normalizedWorkflow =
     workflow === "validation"
       ? "validation"
       : workflow === "recreate"
       ? "recreate"
       : "compile"
+  if (normalizedWorkflow !== "validation" && !userState.accountName) {
+    alert("A registered name is required to publish stats snapshots.")
+    return
+  }
+
+  statsBoardState.compiling = true
+  statsBoardState.pauseRequested = false
+  setStatsCompileButtonBusy(true)
 
   const statusEl = getStatsStatusEl()
   const modalSteps = buildStatsCompileSteps(normalizedWorkflow)
   const isResumeRun = Boolean(resumeCheckpoint) && normalizedWorkflow !== "validation"
   const resumeSummary = getStatsResumeCheckpointSummary(resumeCheckpoint)
+  const isResumeRefreshOnly =
+    Boolean(isResumeRun) &&
+    Boolean(resumeCheckpoint?.completed) &&
+    Number(resumeSummary?.remaining || 0) === 0
   let session = null
+  let lastSavedCheckpointNextIndex = -1
 
   const applyStepUpdate = (update = {}) => {
     if (!update || !update.key) {
@@ -4698,7 +5033,17 @@ const compileStatsProgressRun = async ({
       })
     }
 
-    if (
+    if (isResumeRun) {
+      const referenceData = await fetchStatsBoardGroupData(true)
+      session.referenceData = {
+        minterGroupAddresses: Array.from(
+          referenceData?.minterGroupAddressSet || []
+        ),
+        minterAdminAddresses: Array.from(
+          referenceData?.minterAdminAddressSet || []
+        ),
+      }
+    } else if (
       !session.referenceData ||
       !Array.isArray(session.referenceData.minterAdminAddresses) ||
       session.referenceData.minterAdminAddresses.length === 0
@@ -4724,11 +5069,19 @@ const compileStatsProgressRun = async ({
     statsCompileModalState.identifierPreview =
       `${MINTER_STATS_IDENTIFIER_PREFIX}-${publishTimestamp}`
     statsCompileModalState.message = isResumeRun
-      ? `Resuming stats update for ${formatStatsDate(publishTimestamp)}${
-          resumeSummary?.checkpointIdentifier
-            ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
-            : ""
-        }.`
+      ? isResumeRefreshOnly
+        ? `Refreshing the completed stats snapshot for ${formatStatsDate(
+            publishTimestamp
+          )}${
+            resumeSummary?.checkpointIdentifier
+              ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
+              : ""
+          }.`
+        : `Resuming stats update for ${formatStatsDate(publishTimestamp)}${
+            resumeSummary?.checkpointIdentifier
+              ? ` from checkpoint ${resumeSummary.checkpointIdentifier}`
+              : ""
+          }.`
       : normalizedWorkflow === "validation"
       ? `Validating stats data for ${formatStatsDate(publishTimestamp)}.`
       : normalizedWorkflow === "recreate"
@@ -4736,7 +5089,9 @@ const compileStatsProgressRun = async ({
       : `Updating stats snapshot for ${formatStatsDate(publishTimestamp)}.`
     statsCompileModalState.subtitle = isResumeRun
       ? resumeSummary
-        ? `Continuing checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} at card ${resumeSummary.nextCardNumber} of ${resumeSummary.total} (${resumeSummary.remaining} remaining).`
+        ? isResumeRefreshOnly
+          ? `Checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} already covers ${resumeSummary.total} cards. The published snapshot will be rechecked before publishing.`
+          : `Continuing checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} at card ${resumeSummary.nextCardNumber} of ${resumeSummary.total} (${resumeSummary.remaining} remaining).`
         : `Continuing checkpoint ${session.progressIdentifier || "Unavailable"}.`
       : normalizedWorkflow === "validation"
       ? "This audit will not publish any data."
@@ -4750,7 +5105,9 @@ const compileStatsProgressRun = async ({
     if (statusEl) {
       statusEl.textContent = isResumeRun
         ? resumeSummary
-          ? `Resuming checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} at card ${resumeSummary.nextCardNumber} of ${resumeSummary.total} (${resumeSummary.remaining} remaining).`
+          ? isResumeRefreshOnly
+            ? `Refreshing completed checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} before publishing the snapshot.`
+            : `Resuming checkpoint ${resumeSummary.checkpointIdentifier || session.progressIdentifier || "Unavailable"} at card ${resumeSummary.nextCardNumber} of ${resumeSummary.total} (${resumeSummary.remaining} remaining).`
           : "Continuing a saved stats checkpoint..."
         : normalizedWorkflow === "validation"
         ? "Validating stats data..."
@@ -4767,12 +5124,22 @@ const compileStatsProgressRun = async ({
       })
       applyStepUpdate({
         key: "classify-era",
-        status: "active",
-        detail: `Resuming at card ${Math.min(
-          (session.nextIndex || 0) + 1,
-          session.source.cardCount || 0
-        )} of ${session.source.cardCount || 0}.`,
+        status: isResumeRefreshOnly ? "done" : "active",
+        detail: isResumeRefreshOnly
+          ? `Loaded a completed checkpoint for ${session.source.cardCount || 0} cards. Rechecking the published snapshot before publishing.`
+          : `Resuming at card ${Math.min(
+              (session.nextIndex || 0) + 1,
+              session.source.cardCount || 0
+            )} of ${session.source.cardCount || 0}.`,
       })
+      if (isResumeRefreshOnly) {
+        applyStepUpdate({
+          key: "aggregate",
+          status: "done",
+          detail:
+            "Rebuilding the snapshot summary from the saved records and the latest roster.",
+        })
+      }
     }
 
     while (
@@ -4795,6 +5162,21 @@ const compileStatsProgressRun = async ({
               }
             : null,
       })
+      if (normalizedWorkflow !== "validation" && !session.completed) {
+        const checkpointProgress = `${session.nextIndex || 0}/${session.source?.cardCount || 0}`
+        applyStepUpdate({
+          key: "publish",
+          status: "active",
+          detail: `Saving checkpoint ${checkpointProgress}.`,
+        })
+        await publishStatsCompileCheckpoint(session)
+        lastSavedCheckpointNextIndex = Number(session.nextIndex || 0)
+        applyStepUpdate({
+          key: "publish",
+          status: "done",
+          detail: `Saved checkpoint ${checkpointProgress}.`,
+        })
+      }
       if (!session.completed && !statsBoardState.pauseRequested) {
         await qBoardDelay(0)
       }
@@ -4899,12 +5281,47 @@ const compileStatsProgressRun = async ({
             ? `Re-creating the completed snapshot and checkpoint for ${session.summary.totalNominations || 0} nominator-era cards and ${
                 session.summary.legacyCardCount || 0
               } legacy cards.`
+            : isResumeRefreshOnly
+            ? `Refreshing the completed snapshot and checkpoint for ${session.summary.totalNominations || 0} nominator-era cards and ${
+                session.summary.legacyCardCount || 0
+              } legacy cards.`
             : `Updating the completed snapshot and checkpoint for ${session.summary.totalNominations || 0} nominator-era cards and ${
                 session.summary.legacyCardCount || 0
               } legacy cards.`,
       })
 
       const compiledSnapshot = buildStatsSnapshotFromSession(session)
+      session.summary = {
+        ...session.summary,
+        totalNominations: Number(compiledSnapshot?.summary?.totalNominations || 0),
+        uniqueNominators: Number(compiledSnapshot?.summary?.uniqueNominators || 0),
+        uniqueNominees: Number(compiledSnapshot?.summary?.uniqueNominees || 0),
+        totalConvertedToMinter: Number(
+          compiledSnapshot?.summary?.totalConvertedToMinter || 0
+        ),
+        totalApprovedInvites: Number(
+          compiledSnapshot?.summary?.totalApprovedInvites || 0
+        ),
+        totalPendingInvites: Number(
+          compiledSnapshot?.summary?.totalPendingInvites || 0
+        ),
+        totalKickedAndBanned: Number(
+          compiledSnapshot?.summary?.totalKickedAndBanned || 0
+        ),
+        legacyCardCount: Number(compiledSnapshot?.summary?.legacyCardCount || 0),
+        legacyConvertedToMinter: Number(
+          compiledSnapshot?.summary?.legacyConvertedToMinter || 0
+        ),
+        legacyApprovedInvites: Number(
+          compiledSnapshot?.summary?.legacyApprovedInvites || 0
+        ),
+        legacyPendingInvites: Number(
+          compiledSnapshot?.summary?.legacyPendingInvites || 0
+        ),
+        legacyKickedAndBanned: Number(
+          compiledSnapshot?.summary?.legacyKickedAndBanned || 0
+        ),
+      }
       session.finalSnapshotIdentifier =
         `${MINTER_STATS_IDENTIFIER_PREFIX}-${publishTimestamp}`
       session.finalPublishedAt = Date.now()
@@ -4925,6 +5342,10 @@ const compileStatsProgressRun = async ({
             ? `Re-created ${publishedResources.snapshotIdentifier || "stats snapshot"} and ${
                 publishedResources.checkpointIdentifier || "checkpoint"
               }.`
+            : isResumeRefreshOnly
+            ? `Refreshed ${publishedResources.snapshotIdentifier || "stats snapshot"} and ${
+                publishedResources.checkpointIdentifier || "checkpoint"
+              }.`
             : `Updated ${publishedResources.snapshotIdentifier || "stats snapshot"} and ${
                 publishedResources.checkpointIdentifier || "checkpoint"
               }.`,
@@ -4933,6 +5354,8 @@ const compileStatsProgressRun = async ({
         statusEl.textContent =
           normalizedWorkflow === "recreate"
             ? "Stats data re-created. Refreshing view..."
+            : isResumeRefreshOnly
+            ? "Stats snapshot refreshed. Refreshing view..."
             : "Stats snapshot and checkpoint updated. Refreshing view..."
       }
       applyStepUpdate({
@@ -4955,12 +5378,20 @@ const compileStatsProgressRun = async ({
           ? `Re-created ${publishedResources.snapshotIdentifier || "the stats snapshot"} and ${publishedResources.checkpointIdentifier || "the checkpoint"} at ${formatStatsDate(
               publishTimestamp
             )}.`
+          : isResumeRefreshOnly
+          ? `Refreshed ${
+              publishedResources.snapshotIdentifier || "the stats snapshot"
+            } and ${
+              publishedResources.checkpointIdentifier || "the checkpoint"
+            } at ${formatStatsDate(publishTimestamp)}.`
           : `Updated ${
               publishedResources.snapshotIdentifier || "the stats snapshot"
             } and ${
               publishedResources.checkpointIdentifier || "the checkpoint"
             } at ${formatStatsDate(publishTimestamp)}.`
-      statsCompileModalState.subtitle = `Legacy cards before June 2026 were summarized separately.`
+      statsCompileModalState.subtitle = isResumeRefreshOnly
+        ? "The completed checkpoint was rechecked against the current roster before publishing."
+        : `Legacy cards before June 2026 were summarized separately.`
       updateStatsCompileProgressModal({
         phase: "complete",
         message: statsCompileModalState.message,
@@ -4971,6 +5402,10 @@ const compileStatsProgressRun = async ({
         statusEl.textContent =
           normalizedWorkflow === "recreate"
             ? `Re-created stats data at ${formatStatsDate(publishTimestamp)}.`
+            : isResumeRefreshOnly
+            ? `Refreshed stats snapshot and checkpoint at ${formatStatsDate(
+                publishTimestamp
+              )}.`
             : `Updated stats snapshot and checkpoint at ${formatStatsDate(
                 publishTimestamp
               )}.`
@@ -4985,7 +5420,9 @@ const compileStatsProgressRun = async ({
       session.finalSnapshotIdentifier = ""
       session.finalPublishedAt = 0
       session.completed = false
-      await publishStatsCompileCheckpoint(session)
+      if (lastSavedCheckpointNextIndex !== Number(session.nextIndex || 0)) {
+        await publishStatsCompileCheckpoint(session)
+      }
 
       applyStepUpdate({
         key: "publish",
@@ -5097,6 +5534,7 @@ const loadStatsPage = async () => {
     detachMinterBoardInfiniteScroll()
   }
   qMintershipActiveBoard = "stats"
+  document.title = STATS_PAGE_DOCUMENT_TITLE
 
   clearQMintershipBodyContent()
 
@@ -5129,17 +5567,21 @@ const loadStatsPage = async () => {
         <header class="stats-hero">
           <div class="stats-hero-copy">
             <p class="stats-hero-kicker">Nominator intelligence</p>
-            <h1>Stats</h1>
+            <h1>${qEscapeHtml(STATS_PAGE_TITLE)}</h1>
             <p class="stats-hero-description">
               A live, readable view of the current MINTER group, historic mintership
               data, and the latest publish snapshot. Live minting stats come first,
               the published long-term views sit in the middle, and publish data lives below.
+              This page is still in beta, so not every future stat is shown yet.
             </p>
           </div>
           <div class="stats-hero-chip-stack">
             <div class="stats-hero-chip">
               <img src="${avatarUrl}" alt="" class="stats-hero-avatar" />
               <span>${qEscapeHtml(userState.accountName || "Guest")}</span>
+            </div>
+            <div class="stats-hero-chip stats-hero-chip--role stats-hero-chip--beta">
+              Beta
             </div>
             ${heroRoleChips.join("")}
             <div class="stats-hero-chip stats-hero-chip--muted">
