@@ -78,6 +78,8 @@ export const CHANGELOG: Release[] = [
           'Assets the account owns are marked, and listed even when it holds none of them. An asset that comes in whole units only says Indivisible.',
           'The Overview lists its Q-Assets under At a glance, the ones worth most first; each opens its own window right there.',
           'Settings → Appearance → Page width: Comfortable keeps each page in a centred column; Full window uses the whole width of the window, with decisions, nominations and Minter Admin polls side by side, as many as fit, and Home’s and Settings’ sections and History’s months too. The Explorer, Activity and their tables, charts and grids use the whole width. Forms keep their width. Phones look the same either way.',
+          'Home has the Q-Minter Guide’s minting overview and the history of minting (Q-Mintership 3.0.7’s Q-Minter links) for every status.',
+          'Hub alerts are opt-in, in Settings → Notifications. Turning them on or off there also removes the alerts Q-Mintership 3 set up for its boards, which this version replaces.',
         ],
       },
       {
