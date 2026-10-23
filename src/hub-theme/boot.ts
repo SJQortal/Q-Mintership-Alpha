@@ -13,10 +13,11 @@ import {
 } from './tokens';
 
 /**
- * Where Hub's light/dark mode is remembered, for reloads that lose it. One
- * key for every Q-App on the node's origin: Hub's mode is the same for all.
+ * Where Hub's light/dark mode is remembered, for reloads that lose it. The
+ * kit shares 'qplus-hub-mode' between its apps on the node's origin; here it
+ * is the app's own, like its other keys (index.html says it too).
  */
-export const HOST_MODE_KEY = 'qplus-hub-mode';
+export const HOST_MODE_KEY = 'qmintership-hub-mode';
 
 /** The mode Hub posted during this page's life (THEME_CHANGED): newer than the URL's. */
 let toldThisPage: ColorMode | null = null;

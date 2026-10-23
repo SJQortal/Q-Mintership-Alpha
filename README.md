@@ -78,7 +78,7 @@ The full contract (every identifier, JSON shape, read and Hub request) and the t
 - `src/rules/` holds the pure rules that follow Core: the threshold, the window, tallies, doubles, the admin-change projection. Each is pinned by tests.
 - `src/writes/` holds every write, built from payload builders with tests.
 - `src/data/` holds the reads, and `src/qortal/` the Hub requests.
-- `src/hub-theme/` is the shared theme kit from [SJQortal/Q-Apps-Plus](https://github.com/SJQortal/Q-Apps-Plus), copied in, so it can be edited here like any other source.
+- `src/hub-theme/` is the shared theme kit from [SJQortal/Q-Apps-Plus](https://github.com/SJQortal/Q-Apps-Plus), copied in, so it can be edited here like any other source. One edit: Hub's remembered light/dark is under `qmintership-hub-mode` (`boot.ts` and `index.html`), like the app's other keys.
 - `src/constants/plus.ts` holds the few things that differ from the Q-Mintership+ build: the name, the link name, how the copy names Q-Mintership 3, the storage prefix and the About links. Every screen and `index.html` take them from there.
 - **Q-Mintership 3** is no longer reachable once 4.0 is published under `Q-Mintership`, and doesn't need to be: its boards, the encrypted Admin Board included, are read in History. If it is ever published under a name of its own, its `qortal://APP/…` link in `ORIGINAL_APP_LINK` (`src/constants/plus.ts`) brings back a link to it in Settings.
 - **Dropped from Q-Mintership 3:**
