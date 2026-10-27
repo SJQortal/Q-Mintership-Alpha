@@ -80,6 +80,7 @@ export const CHANGELOG: Release[] = [
           'Settings → Appearance → Page width: Comfortable keeps each page in a centred column; Full window uses the whole width of the window, with decisions, nominations and Minter Admin polls side by side, as many as fit, and Home’s and Settings’ sections and History’s months too. The Explorer, Activity and their tables, charts and grids use the whole width. Forms keep their width. Phones look the same either way.',
           'Home has the Q-Minter Guide’s minting overview and the history of minting (Q-Mintership 3.0.7’s Q-Minter links) for every status.',
           'Hub alerts are opt-in, in Settings → Notifications. Turning them on or off there also removes the alerts Q-Mintership 3 set up for its boards, which this version replaces.',
+          'A decided invite that answered a nomination says “Proposed by” its nominator, then “First approval by” the Minter Admin whose invite started the round, on the decision’s own page. History and the Minter Profile’s timeline say “proposed by” the nominator too. An invite a Minter Admin made without a nomination still names them.',
         ],
       },
       {
@@ -131,6 +132,9 @@ export const CHANGELOG: Release[] = [
           'Connections reads every QORT payment each way (up to 10,000) and every asset transfer and multi-payment (up to 5,000). Once Overview has read an account’s whole history, Connections, Compare and the sponsee lists use all of it.',
           'Connections lists Q-Asset trades: who an account bought from and sold to, for what, with the two orders behind each; on the circle, what came in and what went out both count.',
           'Connections has one Account report: everything read on chain about the account and its connections, with Core’s own sponsorship report, as a plain Markdown file to save or copy. Each connection names its block, date and full signature, and the report says what was read. It suggests reading the whole history first, and can do it there.',
+          'A Trades tab, between Transactions and Assets: the QORT an account sold and bought on Q-Trade, every chain, the trade offers it made and how each ended (completed, ended without a trade, open), and its Q-Asset trades, summed up at the top.',
+          'Under the summary, a breakdown: the QORT it sold and bought by coin, over time as a chart or a table, its offers by coin, by Q-Asset, and highlights: its biggest trades and averages, and the accounts it traded with most. Its trades are listed under it, each with its coin, its price, the other account and its AT.',
+          'A decided invite’s page offers Compare nominee and nominator, as it does while the decision waits.',
         ],
       },
       {
